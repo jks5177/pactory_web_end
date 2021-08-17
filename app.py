@@ -24,6 +24,111 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
 ret, frame = cam.read()
 '''
 
+def preprocess(img) :
+    import cv2
+    import numpy as np
+
+    r = 800.0 / img.shape[0]
+    dim = (int(img.shape[1] * r), 800)
+    img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    dst = img.copy()
+
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.GaussianBlur(gray, (3, 3), 0)
+    edged = cv2.Canny(gray, 75, 200)
+
+    # threshold를 이용하여 binary image로 변환
+    ret, thresh = cv2.threshold(edged, 127, 255, 0)
+
+    # contours는 point의 list형태. 예제에서는 사각형이 하나의 contours line을 구성하기 때문에 len(contours) = 1. 값은 사각형의 꼭지점 좌표.
+    # hierachy는 contours line의 계층 구조
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+
+    # dst = cv2.drawContours(dst, contours, -1, (0, 255, 0), 3)
+    #
+    # return dst, (0,0,0,0)
+
+    # print(len(contours))
+    cnts = sorted(contours, key=cv2.contourArea, reverse=True)
+    # print(len(cnts))
+    # try :
+    # cnts = sorted(contours, key=cv2.contourArea, reverse=True)[0]
+
+    dst = cv2.drawContours(dst, cnts, 0, (0, 255, 0), 3)
+    try :
+        corner = list(range(4))  # 사각형의 꼭짓점 저장
+
+        # 시작 위치
+        st = cnts[0][0]
+
+        # 시작 위치의 대각선 꼭짓점 찾기
+        fMaxDist = 0.0
+        for i in range(len(cnts[0])):
+            pt = cnts[0][i]
+            fDist = ((st[0][0] - pt[0][0]) ** 2 + (st[0][1] - pt[0][1]) ** 2) ** 0.5
+
+            if fDist > fMaxDist:
+                corner[0] = pt
+                fMaxDist = fDist
+
+        # 이전 corner의 꼭짓점에서 대각선 꼭짓점 찾기
+        fMaxDist = 0.0
+        for i in range(len(cnts[0])):
+            pt = cnts[0][i]
+            fDist = ((corner[0][0][0] - pt[0][0]) ** 2 + (corner[0][0][1] - pt[0][1]) ** 2) ** 0.5
+
+            if fDist > fMaxDist:
+                corner[1] = pt
+                fMaxDist = fDist
+
+        # 이전 2개의 꼭짓점과 가장 먼 꼭짓점 찾기
+        sumMaxDist = 0.0
+        for i in range(len(cnts[0])):
+            pt = cnts[0][i]
+            fDist = ((st[0][0] - pt[0][0]) ** 2 + (st[0][1] - pt[0][1]) ** 2) ** 0.5
+            sDist = ((corner[0][0][0] - pt[0][0]) ** 2 + (corner[0][0][1] - pt[0][1]) ** 2) ** 0.5
+
+            sumDist = fDist + sDist
+
+            if sumDist > sumMaxDist:
+                corner[2] = pt
+                sumMaxDist = sumDist
+
+        # 3번째 꼭짓점과 가장 멀리 떨어진, 즉 대각선의 꼭짓점 찾기
+        fMaxDist = 0.0
+        for i in range(len(cnts[0])):
+            pt = cnts[0][i]
+            fDist = ((corner[2][0][0] - pt[0][0]) ** 2 + (corner[2][0][1] - pt[0][1]) ** 2) ** 0.5
+
+            if fDist > fMaxDist:
+                corner[3] = pt
+                fMaxDist = fDist
+
+        # 좌표 표시하기
+        cv2.circle(dst, tuple(corner[0][0]), 5, (0, 0, 255), 2)
+        cv2.circle(dst, tuple(corner[1][0]), 5, (0, 0, 255), 2)
+        cv2.circle(dst, tuple(corner[2][0]), 5, (0, 0, 255), 2)
+        cv2.circle(dst, tuple(corner[3][0]), 5, (0, 0, 255), 2)
+
+        corner_ = np.array(corner)
+        corner_ = corner_.reshape(-1, 2)
+        corner_ = corner_[corner_[:, 0].argsort()]
+
+        L = corner_[:2]
+        R = corner_[2:4]
+        L = L[L[:, 1].argsort()]
+        R = R[R[:, 1].argsort()]
+        LU = L[0]
+        LD = L[1]
+        RU = R[0]
+        RD = R[1]
+
+        return dst, (LU, LD, RU, RD)
+        # return dst, (0, 0, 0, 0)
+
+    except :
+        return img, (0,0,0,0)
+
 #camera = cv2.VideoCapture(0)
 
 #0은 전면, 1은 후면
@@ -43,7 +148,8 @@ def gen_frames():  # generate frame by frame from camera
         if (not ret):
             break
         else:
-            ret, buffer = cv2.imencode('.jpg', frame)
+            frame_, (LU, LD, RU, RD) = preprocess(frame)
+            ret, buffer = cv2.imencode('.jpg', frame_)
             frame = buffer.tobytes()
             yield (b'--frame`\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
