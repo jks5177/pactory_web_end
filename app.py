@@ -1,4 +1,9 @@
 from flask import Flask, render_template, Response
+from flask import Flask, url_for, render_template, request, redirect, session
+#from models import db
+#from models import Fcuser
+#from flask_wtf.csrf import CSRFProtect
+#from forms import ResiterForm,LoginForm
 import os
 from importlib import import_module
 import cv2
@@ -23,7 +28,7 @@ ret, frame = cam.read()
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
 ret, frame = cam.read()
 '''
-
+# 사각형 이미지 detection
 def preprocess(img) :
     import cv2
     import numpy as np
@@ -134,6 +139,50 @@ def preprocess(img) :
 #0은 전면, 1은 후면
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
+#사용자 등록 페이지
+@app.route('/register', methods=['GET','POST'])
+def register():
+	if request.method =='GET':
+		return render_template("register.html")
+	else:
+		user_name = request.form.get('user_name')
+		user_company = request.form.get('user_company')
+
+		if not (user_name and user_company):
+			return "모두 입력해주세요"
+		else:
+			user = User()
+			user.user_name = user_name
+			user.user_company = user_company
+			db.session.add(user)
+			db.session.commit()
+			return "회원가입 완료"
+		return redirect('/')
+#로그인 페이지
+# login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
+@app.route('/login', methods=['GET', 'POST'])	
+def login():
+	if request.method=='GET':
+		return render_template('login.html')
+	else:
+		user_company = request.form['user_company']
+		user_name = request.form['user_name']
+		try:
+			data = User.query.filter_by(user_company=user_company, user_name=user_name).first()	# ID/PW 조회Query 실행
+			if data is not None:	# 쿼리 데이터가 존재하면
+				session['user_company'] = user_company	# userid를 session에 저장한다.
+				return redirect('/')
+			else:
+				return 'Dont Login'	# 쿼리 데이터가 없으면 출력
+		except:
+			return "dont login"	# 예외 상황 발생 시 출력
+
+@app.route('/logout', methods=['GET'])
+def logout():
+	session.pop('userid', None)
+	return redirect('/') 
+    
+
 #메인 페이지
 @app.route('/')
 def index():
@@ -179,3 +228,4 @@ def total():
 
 if __name__ == '__main__':
     app.run('localhost', 4997)
+
