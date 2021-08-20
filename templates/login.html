@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+{% if session['user_name'] %}
+    <p>이미 로그인 하셨습니다.</p>
+{% else %}
+<center>
+    <div>
+        <h2>로그인</h2>
+        <form action="/login" method="POST">
+            <input type="text" name="user_company" placeholder="하역사명">
+            <input type="number" name="userid" placeholder="Phone">
+            <input type="text" name="user_name" placeholder="Checker">
+            <br><br>
+            <input type="submit" value="작업시작">
+        </form>
+    </div>
+</center>
+{% endif %}
+</body>
+</html>
