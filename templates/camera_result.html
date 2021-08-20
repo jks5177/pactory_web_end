@@ -34,16 +34,22 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-4 offset-lg-2">
-      <h3 class="mt-5">검수 작업을 시작해주세요!</h3>
+      <h3 class="mt-5">결과 사진 및 결과 값 입니다!</h3>
       <div style="text-align: center">
-        <img src="{{url_for('video_feed')}}" width="200%" height="100%">
+        <img src="{{ url_for('static', filename=image_file) }}" width="200%" height="100%">
+      </div>
+      <div style="text-align: center">
+        <form action="save" method="GET">
+          <div class="print", id="text"> {{text}}</div>
+        </form>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div style="text-align: center">
-      <input type='button' value='분석시작' onClick="location.href='/picture'" style="padding 15px 50px;"/>
+      <input type='button' value='이전' onClick="location.href='/del'" style="padding 15px 50px;"/>
+      <input type='button' value='저장' onClick="location.href='/save'" style="padding 15px 50px;"/>
     </div>
   </div>
 
