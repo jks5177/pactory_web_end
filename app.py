@@ -1,10 +1,12 @@
 import flask
 from flask import Flask, render_template, Response
 from flask import Flask, url_for, render_template, request, redirect, session
-# from model import db
-# from model import Fcuser
-# from flask_wtf.csrf import CSRFProtect
-# from form import ResiterForm,LoginForm
+
+#from model import db
+#from model import Fcuser
+#from flask_wtf.csrf import CSRFProtect
+#from form import ResiterForm,LoginForm
+
 import os
 from importlib import import_module
 import cv2
@@ -72,6 +74,7 @@ def preprocess(img) :
 #camera = cv2.VideoCapture(0)
 
 #0은 전면, 1은 후면
+<<<<<<< HEAD
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
@@ -118,6 +121,56 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # def logout():
 # 	session.pop('userid', None)
 # 	return redirect('/')
+=======
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+
+#사용자 등록 페이지
+@app.route('/register', methods=['GET','POST'])
+def register():
+	# if request.method =='GET':
+	#     return render_template("register.html")
+	# else:
+        #userid = request.form.get('userid')
+        #user_name = request.form.get('user_name')
+        #user_company = request.form.get('user_company')
+
+    # if not (user_company and userid and user_name):
+	# 	return "모두 입력해주세요"
+    # else:
+	# 	user = User()
+	# 	user.userid = userid
+	# 	user.user_name = user_name
+    #     user.user_company = user_company
+    #     db.session.add(user)
+	# 	db.session.commit()
+	# 	return "회원가입 완료"
+    return redirect('/')
+
+#로그인 페이지
+# login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
+@app.route('/login', methods=['GET', 'POST'])	
+def login():
+	if request.method=='GET':
+		return render_template('login.html')
+	else:
+		userid = request.form['userid']
+		user_name = request.form['user_name']
+		try:
+			data = User.query.filter_by(userid=userid, user_name=user_name).first()	# ID/PW 조회Query 실행
+			if data is not None:	# 쿼리 데이터가 존재하면
+				session['userid'] = userid	# userid를 session에 저장한다.
+				return redirect('/')
+			else:
+				return 'Dont Login'	# 쿼리 데이터가 없으면 출력
+		except:
+			return "dont login"	# 예외 상황 발생 시 출력
+
+@app.route('/logout', methods=['GET'])
+def logout():
+	session.pop('userid', None)
+	return redirect('/') 
+
+>>>>>>> 01935212f22ad23166963fa0051db76e363e9f11
     
 
 #메인 페이지
