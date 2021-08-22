@@ -40,14 +40,22 @@ def preprocess(img) :
     dim = (int(img.shape[1] * r), 800)
     img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
 
-    w, h, c = img.shape
-    # print(w*0.1, h*0.1)
-    # print(w*0.9, h*0.9)
+    h, w, c = img.shape
 
-    LU = (int(h*0.2),int(w*0.1))
-    LD = (int(h*0.8),int(w*0.1))
-    RU = (int(h*0.2),int(w*0.9))
-    RD = (int(h*0.8),int(w*0.9))
+    LU = (int(w * 0.2), int(h * 0.1))
+    LD = (int(w * 0.2), int(h * 0.9))
+    RU = (int(w * 0.8), int(h * 0.1))
+    RD = (int(w * 0.8), int(h * 0.9))
+
+    # print(LU, LD, RU, RD)
+
+    dst = img.copy()
+
+    img = cv2.GaussianBlur(dst, (0,0), 5) # 이미지 blur 처리
+
+    roi = dst[LU[1]:LD[1], LU[0]:RU[0]] # 관심 영역 설정
+
+    img[LU[1]:LD[1], LU[0]:RU[0]] = roi # 해당 영역 roi로 변환
 
     for i in [[LU, LD], [LU, RU], [RU, RD], [LD, RD]] :
         length = abs(i[0][0]-i[1][0])+abs(i[0][1]-i[1][1])
@@ -55,17 +63,16 @@ def preprocess(img) :
         for j in range(0,100,2) :
             if i[0][0] == i[1][0] :
                 # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (0,255,0), 2)
+                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (112,230,230), 2)
             elif i[0][1] == i[1][1] :
-                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (0,255,0), 2)
-
+                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (112,230,230), 2)
     return img
 
 
 #camera = cv2.VideoCapture(0)
 
 #0은 전면, 1은 후면
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 # #사용자 등록 페이지
@@ -145,10 +152,13 @@ def camera_result():
 @app.route('/picture')
 def taking_picture(): # 사진을 저장하는 페이지
     ret, frame = cam.read()  # read the camera frame
+
     d = pytesseract.image_to_data(frame, output_type=Output.DICT) # pytesseract로 ORC 검사
-    # print(d['text'])
+
+    print(d['text'])
     for i in range(len(d['text'])):
         # print(i)
+        text = d['text'][i].strip()
         if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 15:
             # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
