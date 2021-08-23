@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+<<<<<<< HEAD
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
@@ -11,6 +12,16 @@
     {% else %}
     <center>
         <div class="login-wrap">
+=======
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="/static/login/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-wrap">
+>>>>>>> e92f1bc6a23d41071f23b0a484e6723816901c90
         <div class="login-html">
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
@@ -63,6 +74,23 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+    </div>
+{% if session['user_name'] %}
+    <p>이미 로그인 하셨습니다.</p>
+{% else %}
+<center>
+    <div>
+        <h2>로그인</h2>
+        <form action="/login" method="POST">
+            <!-- <input type="text" name="user_company" placeholder="하역사명"> -->
+            <input type="number" name="userid" placeholder="Phone">
+            <input type="text" name="user_name" placeholder="Checker">
+            <br><br>
+            <input type="submit" value="작업시작">
+        </form>
+>>>>>>> e92f1bc6a23d41071f23b0a484e6723816901c90
     </div>
     </center>
     {% endif %}
