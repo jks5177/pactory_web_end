@@ -2566,7 +2566,7 @@ smaller than 560
   margin-bottom: 0px !important; }
 
 .m-b-5 {
-  margin-bottom: 5px !important; }
+  margin-bottom: revert; }
 
 .m-b-10 {
   margin-bottom: 10px !important; }

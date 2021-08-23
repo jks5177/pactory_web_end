@@ -13,8 +13,9 @@
     <!-- PLUGINS STYLES -->
     <link href="/static/total/assets/vendors/jvectormap/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
     <!-- THEME STYLES -->
-    <link href="/static/total/assets/css/main.min.css?a" rel="stylesheet" />
+    <link href="/static/total/assets/css/main.min.css" rel="stylesheet" />
     <!-- PAGE LEVEL STYLES -->
+    <link href="/static/total/assets/css/main.css?b" rel="stylesheet" />
 </head>
 
 <body class="fixed-navbar">
@@ -23,7 +24,7 @@
         <header class="header">
             <div class="page-brand">
                 <a class="link" href="total.html">
-                    <span class="brand">Admin
+                    <span class="brand">CHEKER
                         <span class="brand-tip">CAST</span>
                     </span>
                     <span class="brand-mini">AC</span>
@@ -421,7 +422,7 @@
                                         
                                               <!--talbe begins-->
                                               
-                                             <table><tr><td><b>Name</b></td><td><b>Mobile</b></td><td><b>Email</b></td><td><b>Current Bank</b></td><td><b>Property Type</b></td><td><b>Loan Amount</b></td><td><b>Interest (%p.a.)</b></td><td><b>Remaining Tenure (Years)</b></td><td><b>Reminder Date</b></td></tr><tr><td>Goh Pei Yong</td><td> 91548220</td><td> gpy6529@gmail.com</td><td>DBS</td><td>Bungalow</td><td>200000.00</td><td>4</td><td>10</td><td>2024-01-01 00:00:00</td></tr><tr><td>Goh Pei Yong</td><td> 91548220</td><td> gpy6529@gmail.com</td><td>DBS</td><td>Bungalow</td><td>200000.00</td><td>5</td><td>5</td><td>2019-01-01 00:00:00</td></tr><tr><td>Goh Pei Yong</td><td> 91548220</td><td> gpy6529@gmail.com</td><td>DBS</td><td>Bungalow</td><td>200000.00</td><td>4</td><td>9</td><td>2014-04-07 00:00:00</td></tr><tr><td>Name</td><td> 22334495</td><td> haibo.ye@solstice.sg</td><td>DBS</td><td>HUDC</td><td>29238823.00</td><td>2323</td><td>2232</td><td>4246-04-03 00:00:00</td></tr><tr><td>JOEJOE</td><td> 322332</td><td> joe@solcsitcesgw</td><td>DBS</td><td>HDB</td><td>23223.00</td><td>322</td><td>122112</td><td>2014-04-30 00:00:00</td></tr><tr><td>i am junhong superman</td><td> 32</td><td> junhong.ye@solstice.sg</td><td>DBS</td><td>HDB</td><td>2323.00</td><td>23</td><td>23</td><td>2037-04-18 00:00:00</td></tr><tr><td>haibo</td><td> 88475893</td><td> haibo1.ye@solstice.sg</td><td>POSB</td><td>Private Apartment</td><td>23.00</td><td>223</td><td>12</td><td>2026-10-01 00:00:00</td></tr><tr><td>joeleejoeking</td><td> 88393894</td><td> joe.lee@solstice.sg</td><td>OCBC</td><td>HDB</td><td>920392.00</td><td>2323</td><td>12</td><td>2026-07-13 00:00:00</td></tr></table> 
+                                             <table><tr><td><b>CHIEF</b></td><td><b>CLERK</b></td><td><b>BLOCK</b></td><td><b>GATE</b></td><td><b>TALLY</b></td><tr><td>조진철</td><td> 우병오</td><td>김창욱</td><td>정성민</td><td>전용재</td></tr><tr><td></td><td></td><td>양승열</td><td>김태일</td><td>진수만</td></tr><td></td><td></td><td>양희범</td><td>서동영</td><td>정기환</td></table> 
                                              <!-- table ends-->
                                             </div>
                                           </div>
@@ -447,9 +448,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <canvas id="bar_chart" style="height:260px;"></canvas>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -458,7 +457,7 @@
                         <div class="ibox">
                             
                             <div class="ibox-head">
-                                <div class="ibox-title">남은 작업 예상시간</div>
+                                <div class="ibox-title">남은 출항시간</div>
                             </div>
                             
 
@@ -493,16 +492,16 @@
                     <div class="col-lg-8">
                         <div class="ibox">
                             <div class="ibox-head">
-                                <div class="ibox-title">Visitors Statistics</div>
+                                <div class="ibox-title">Deck별 선적현황</div>
                             </div>
                             <div class="ibox-body">
                                 <div id="world-map" style="height: 300px;"></div>
                                 <table class="table table-striped m-t-20 visitors-table">
                                     <thead>
                                         <tr>
-                                            <th>Country</th>
-                                            <th>Visits</th>
-                                            <th>Data</th>
+                                            <th>선박명</th>
+                                            <th>Deck</th>
+                                            <th>적재량</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -591,7 +590,7 @@
                     <div class="col-lg-4">
                         <div class="ibox">
                             <div class="ibox-head">
-                                <div class="ibox-title">데크별 선적 현황</div>
+                                <div class="ibox-title"></div>
                                 <div>
                                     <a class="btn btn-info btn-sm" href="javascript:;">New Task</a>
                                 </div>
@@ -724,7 +723,7 @@
                     <div class="col-lg-8">
                         <div class="ibox">
                             <div class="ibox-head">
-                                <div class="ibox-title">Latest Orders</div>
+                                <div class="ibox-title">OCR 차량검수 현황</div>
                                 <div class="ibox-tools">
                                     <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
