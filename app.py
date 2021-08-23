@@ -74,7 +74,7 @@ def preprocess(img) :
 #camera = cv2.VideoCapture(0)
 
 #0은 전면, 1은 후면
-<<<<<<< HEAD
+
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
@@ -121,7 +121,7 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # def logout():
 # 	session.pop('userid', None)
 # 	return redirect('/')
-=======
+
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
 #사용자 등록 페이지
@@ -170,7 +170,7 @@ def logout():
 	session.pop('userid', None)
 	return redirect('/') 
 
->>>>>>> 01935212f22ad23166963fa0051db76e363e9f11
+
     
 
 #메인 페이지
