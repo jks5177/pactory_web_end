@@ -1,19 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<<<<<<< HEAD
-    <head>
-        <meta charset="UTF-8">
-        <title>Login</title>
-    </head>
-    <body>
-    {% if session['user_name'] %}
-        <p>이미 로그인 하셨습니다.</p>
-    {% else %}
-    <center>
-        <div class="login-wrap">
-=======
-    
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -21,20 +8,25 @@
 </head>
 <body>
     <div class="login-wrap">
->>>>>>> e92f1bc6a23d41071f23b0a484e6723816901c90
+
         <div class="login-html">
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">근무자</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">회원가입</label>
             <div class="login-form">
                 <div class="sign-in-htm">
                     <div class="group">
-                        <label for="user" class="label">Username</label>
+                        <label for="user" class="label">회사명</label>
                         <input id="user" type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label for="user" class="label">근무자</label>
+                        <input id="user" type="text" class="input" >
                     </div>
+                    <div class="group">
+                        <label for="user" class="label">Phone Number</label>
+                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX">
+                    </div>
+
                     <div class="group">
                         <input id="check" type="checkbox" class="check" checked>
                         <label for="check"><span class="icon"></span> Keep me Signed in</label>
@@ -49,16 +41,16 @@
                 </div>
                 <div class="sign-up-htm">
                     <div class="group">
-                        <label for="user" class="label">Username</label>
+                        <label for="user" class="label">회사명</label>
                         <input id="user" type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label for="user" class="label">검수자명</label>
+                        <input id="user" type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Repeat Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label for="user" class="label">Phone number</label>
+                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Email Address</label>
@@ -74,39 +66,18 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-=======
     </div>
 {% if session['user_name'] %}
     <p>이미 로그인 하셨습니다.</p>
 {% else %}
 <center>
     <div>
-        <h2>로그인</h2>
-        <form action="/login" method="POST">
-            <!-- <input type="text" name="user_company" placeholder="하역사명"> -->
-            <input type="number" name="userid" placeholder="Phone">
-            <input type="text" name="user_name" placeholder="Checker">
-            <br><br>
-            <input type="submit" value="작업시작">
-        </form>
->>>>>>> e92f1bc6a23d41071f23b0a484e6723816901c90
-    </div>
-    </center>
-    {% endif %}
-    </body>
-    </html>
 
-    {% comment %} 
-    <div class="wrapper">
-        <form class="form-signin">       
-        <h2 class="form-signin-heading">Please login</h2>
-        <input type="text" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" />
-        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>      
-        <label class="checkbox">
-            <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-        </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
+        <form action="/login" method="POST">
+
         </form>
-    
-    </div> {% endcomment %}
+    </div>
+</center>
+{% endif %}
+</body>
+</html>
