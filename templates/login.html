@@ -5,10 +5,16 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link href="/static/login/css/main.css" rel="stylesheet" />
+<style>
+body {
+    background-image: url("/static/login/assets/img/roro_ship.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+</style>
 </head>
 <body>
     <div class="login-wrap">
-
         <div class="login-html">
             <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">근무자</label>
             <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">회원가입</label>
@@ -24,7 +30,7 @@
                     </div>
                     <div class="group">
                         <label for="user" class="label">Phone Number</label>
-                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX">
+                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX ( '-' 제외 )">
                     </div>
 
                     <div class="group">
@@ -50,7 +56,7 @@
                     </div>
                     <div class="group">
                         <label for="user" class="label">Phone number</label>
-                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX">
+                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX ( '-' 제외 )">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Email Address</label>
