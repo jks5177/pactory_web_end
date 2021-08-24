@@ -16,6 +16,12 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="/static/camera/assets/css/styles.css?a" rel="stylesheet" />
+<style>
+body {
+  background-color: rgba( 78, 141, 245, 0.15 );
+  display: flex;
+}
+</style>
 </head>
 <body>
   <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
@@ -32,19 +38,19 @@
       </ul>
   </nav>
   <div class="container">
-    <div class="row">
+    <div class="row-cols-auto">
       <div class="col">
-        <h3 class="mt-5">검수 작업을 시작해주세요!</h3>
-
         <div style="text-align: center">
-          <img src="{{url_for('video_feed')}}" width="100%" height="100%" margin="20px">
+            <h3 class="mt-5" style="color:#333333; font-size: 1em;">검수작업을 시작해주세요.</h3>
+        <div style="text-align: center">
+          <img src="{{url_for('video_feed')}}" width="81%" height="81%" margin="20px">
         </div>
 
         <div style="text-align: center">
-          <div class="row">
+          <div class="row-cols-auto">
 <!--            <div style="text-align : center">-->
 <!--              <a class="btn btn-primary btn-xl" href="/picture" id="img_bnt"><img src="/static/img/photo_button.png" width="50%" height="50%"></a>&nbsp;&nbsp;-->
-            <input type='button' value='분석시작' onClick="location.href='/picture'" style="background-color:#22d10f; border:none; color:#ffffff; height:100px; font-size: 3em">
+            <input type='button' value='분석 시작' onClick="location.href='/picture'" style="background-color:#00C73C; border:none; color:#FFFFFF; width:898px; height:44px; font-size: 1.8em; font-style: Malgun Gothic; font-weight: bold;">
 <!--            </div>-->
           </div>
         </div>
