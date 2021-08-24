@@ -15,7 +15,14 @@
   <!-- Google fonts-->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
   <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="/static/camera/assets/css/styles.css?a" rel="stylesheet" />
+  <link href="/static/camera/assets/css/styles.css" rel="stylesheet" />
+<!--  <link href="/static/camera_result/assets/css/camera_result.css" rel="stylesheet" />-->
+<style>
+body {
+  background-color: rgba( 78, 141, 245, 0.15 );
+  display: flex;
+}
+</style>
 </head>
 <body>
   <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
@@ -31,29 +38,33 @@
           <!--<li class="sidebar-nav-item"><a href="#contact">Contact</a></li>-->
       </ul>
   </nav>
-<div class="container">
-  <div class="row-cols-auto">
-    <div class="col-lg-4 offset-lg-2">
-      <h3 class="mt-5">결과 사진 및 결과 값 입니다!</h3>
-      <div style="text-align: center">
-        <img src="{{ url_for('static', filename=image_file) }}" width="100%" height="100%">
-      </div>
-      <div style="text-align: center">
-        <form action="save" method="GET">
-          <div class="print", id="text", style="font-size:2em"> {{text}}</div>
-        </form>
+
+  <div class="container">
+    <div class="row-cols-auto">
+      <div class="col">
+        <div style="text-align: center">
+          <h3 class="mt-5" style="color:#333333; font-size: 1em;">결과 사진입니다.</h3>
+        </div>
+        <div style="text-align: center">
+          <img src="{{ url_for('static', filename=image_file) }}" width="540px" height="540px">
+        </div>
+        <div style="text-align: center">
+          <form action="save" method="GET">
+            <div class="print", id="text", style="font-size:2em"> {{text}}</div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
   <div class="col">
     <div style="text-align: center">
-      <input type='button' value='이전' onClick="location.href='/del'" style="width:315px; height:70px"/>
-      <input type='button' value='저장' onClick="location.href='/save'" style="width:315px; height:70px"/>
+        <input type='button' value='이전' onClick="location.href='/del'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
+        <input type="text" placeholder="틀렸으면 VIN을 입력하세요." name="VIN" style="width:190px; height:35px; font-size: 0.9em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;">
+        <input type='button' value='저장' onClick="location.href='/save'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
     </div>
   </div>
-
 </div>
     <script src="/static/camera/assets/js/scripts.js"></script>
+<!--    <script src="/static/camera_result/assets/js/camera_result.js"></script>-->
 </body>
 </html>

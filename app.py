@@ -93,9 +93,9 @@ def preprocess(img) :
         for j in range(0,100,2) :
             if i[0][0] == i[1][0] :
                 # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (112,230,230), 2)
+                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (42,204,246), 2)
             elif i[0][1] == i[1][1] :
-                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (112,230,230), 2)
+                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
 
 
@@ -103,7 +103,55 @@ def preprocess(img) :
 
 #0은 전면, 1은 후면
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW)
+
+# #사용자 등록 페이지
+# @app.route('/register', methods=['GET','POST'])
+# def register():
+# 	if request.method =='GET':
+# 		return render_template("register.html")
+# 	else:
+# 		user_name = request.form.get('user_name')
+# 		user_company = request.form.get('user_company')
+#
+# 		if not (user_name and user_company):
+# 			return "모두 입력해주세요"
+# 		else:
+# 			user = User()
+# 			user.user_name = user_name
+# 			user.user_company = user_company
+# 			db.session.add(user)
+# 			db.session.commit()
+# 			return "회원가입 완료"
+# 		return redirect('/')
+#
+# #로그인 페이지
+# # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+# 	if request.method=='GET':
+# 		return render_template('login.html')
+# 	else:
+# 		user_company = request.form['user_company']
+# 		user_name = request.form['user_name']
+# 		try:
+# 			data = User.query.filter_by(user_company=user_company, user_name=user_name).first()	# ID/PW 조회Query 실행
+# 			if data is not None:	# 쿼리 데이터가 존재하면
+# 				session['user_company'] = user_company	# userid를 session에 저장한다.
+# 				return redirect('/')
+# 			else:
+# 				return 'Dont Login'	# 쿼리 데이터가 없으면 출력
+# 		except:
+# 			return "dont login"	# 예외 상황 발생 시 출력
+#
+# @app.route('/logout', methods=['GET'])
+# def logout():
+# 	session.pop('userid', None)
+# 	return redirect('/')
+
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
