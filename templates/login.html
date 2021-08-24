@@ -9,25 +9,32 @@
 <body>
     <div class="login-wrap">
         <div class="login-html">
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">근무자</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">회원가입</label>
             <div class="login-form">
                 <div class="sign-in-htm">
-                    <div class="group">
-                        <label for="user" class="label">Username</label>
-                        <input id="user" type="text" class="input">
-                    </div>
-                    <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
-                    </div>
-                    <div class="group">
-                        <input id="check" type="checkbox" class="check" checked>
-                        <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                    </div>
-                    <div class="group">
-                        <input type="submit" class="button" value="Sign In">
-                    </div>
+                    <form method="post" action="http://localhost:4997/login">
+                        <div class="group">
+                            <label for="user_company" class="label">회사명</label>
+                            <input id="user_company" type="text" class="input" name="user_company">
+                        </div>
+                        <div class="group">
+                            <label for="user_name" class="label">근무자</label>
+                            <input id="user_name" type="text" class="input" name="user_name">
+                        </div>
+                        <div class="group">
+                            <label for="user_phoneNum" class="label">Phone Number</label>
+                            <input id="user_phoneNum" type="text" class="input" placeholder="010-XXXX-XXXX" name="user_phoneNum">
+                        </div>
+                        <div class="group">
+                            <input id="check" type="checkbox" class="check" checked>
+                            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Sign In" onClick="location.href='/login'">
+                        </div>
+                    </form>
+
                     <div class="hr"></div>
                     <div class="foot-lnk">
                         <a href="#forgot">Forgot Password?</a>
@@ -35,16 +42,16 @@
                 </div>
                 <div class="sign-up-htm">
                     <div class="group">
-                        <label for="user" class="label">Username</label>
+                        <label for="user" class="label">회사명</label>
                         <input id="user" type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label for="user" class="label">검수자명</label>
+                        <input id="user" type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Repeat Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label for="user" class="label">Phone number</label>
+                        <input id="user" type="text" class="input" placeholder="010-XXXX-XXXX">
                     </div>
                     <div class="group">
                         <label for="pass" class="label">Email Address</label>
@@ -61,21 +68,5 @@
             </div>
         </div>
     </div>
-{% if session['user_name'] %}
-    <p>이미 로그인 하셨습니다.</p>
-{% else %}
-<center>
-    <div>
-        <h2>로그인</h2>
-        <form action="/login" method="POST">
-            <!-- <input type="text" name="user_company" placeholder="하역사명"> -->
-            <input type="number" name="userid" placeholder="Phone">
-            <input type="text" name="user_name" placeholder="Checker">
-            <br><br>
-            <input type="submit" value="작업시작">
-        </form>
-    </div>
-</center>
-{% endif %}
 </body>
 </html>

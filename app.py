@@ -1,4 +1,5 @@
 import flask
+import sqlalchemy.sql.expression
 from flask import Flask, render_template, Response
 from flask import Flask, url_for, render_template, request, redirect, session
 
@@ -6,6 +7,8 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from model import Fcuser
 #from flask_wtf.csrf import CSRFProtect
 #from form import ResiterForm,LoginForm
+from mysqlx import connection
+
 from model.user_model import User
 
 import os
@@ -18,6 +21,31 @@ import time
 import datetime
 import sys
 from flask import Flask, render_template
+
+import socket
+
+import pandas as pd
+import sqlalchemy as db
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
+# db 연동
+engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+
+# db Base 클래스 생성 => DB를 가져올 class를 생성함
+Base = declarative_base()
+Base.query = db_session.query_property()
+
+# DB 가져오기
+connection = engine.connect()
+metadata = Base.metadata
+metadata.create_all(engine)
+
 app = Flask(__name__)
 
 '''
@@ -75,7 +103,7 @@ def preprocess(img) :
 
 #0은 전면, 1은 후면
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
@@ -101,23 +129,22 @@ def register():
 
 #로그인 페이지
 # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    return render_template('login.html')
-	# if request.method=='GET':
-	# 	return render_template('login.html')
-	# else:
-	# 	userid = request.form['userid']
-	# 	user_name = request.form['user_name']
-	# 	try:
-	# 		data = User.query.filter_by(userid=userid, user_name=user_name).first()	# ID/PW 조회Query 실행
-	# 		if data is not None:	# 쿼리 데이터가 존재하면
-	# 			session['userid'] = userid	# userid를 session에 저장한다.
-	# 			return redirect('/')
-	# 		else:
-	# 			return 'Dont Login'	# 쿼리 데이터가 없으면 출력
-	# 	except:
-	# 		return "dont login"	# 예외 상황 발생 시 출력
+@app.route('/', methods=['GET', 'POST'])
+def login_page():
+	if request.method=='GET':
+		return render_template('login.html')
+	else:
+		userid = request.form['userid']
+		user_name = request.form['user_name']
+		try:
+			data = User.query.filter_by(userid=userid, user_name=user_name).first()	# ID/PW 조회Query 실행
+			if data is not None:	# 쿼리 데이터가 존재하면
+				session['userid'] = userid	# userid를 session에 저장한다.
+				return redirect('/main')
+			else:
+				return 'Dont Login'	# 쿼리 데이터가 없으면 출력
+		except:
+			return "dont login"	# 예외 상황 발생 시 출력
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -125,7 +152,7 @@ def logout():
 	return redirect('/')
 
 #메인 페이지
-@app.route('/')
+@app.route('/main')
 def index():
     return render_template('index.html')
 
@@ -163,24 +190,29 @@ def taking_picture(): # 사진을 저장하는 페이지
     for i in range(len(d['text'])):
         # print(i)
         text = d['text'][i].strip()
-        if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 15:
+        if (text.startswith('KM') or text.startswith('KN')) and len(text) > 15:
             # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
             frame = cv2.rectangle(frame, (x-5, y-3), (x + w+10, y + h+6), (0, 255, 0), 2) # 해당 위치에 bounding box 생성
-            text = d['text'][i]
+            # text = d['text'][i]
 
             # 파일 이름 생성
             now = time.localtime()
             s = '%04d-%02d-%02d-%02d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
             file_path = 'image/check_'+s+'.jpg'
 
+            directory = 'static/image'
+
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
             # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
-            cv2.imwrite('static/'+file_path,frame)
+            cv2.imwrite('static/'+file_path, frame)
             cv2.imwrite('static/image/check.jpg', frame)
 
             # text 파일 생성, 나중에 파일 이름으로 사용될 OCR 결과 값
             f = open("static/image/check.txt", 'w')
-            f.write(d['text'][i])
+            f.write(text)
             f.close()
 
             time.sleep(1)
@@ -213,8 +245,6 @@ def save_img(): # 이미지 저장
     file_path = 'static/complete/' + str(text) + '.jpg'
     cv2.imwrite(file_path, img)
 
-
-
     # temp 폴더 내 파일 제거
     path_dir = 'static/image'
     file_list = os.listdir(path_dir)
@@ -232,9 +262,30 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
 
 
 #선박 접안예측 페이지 
-@app.route('/port')
-def port():
-    return render_template('port.html')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST' :
+        # print("post")
+        user_company = request.form['user_company']
+        user_name = request.form['user_name']
+        user_phoneNum = request.form['user_phoneNum']
+        if len(user_company) == 0 or len(user_name) == 0 or len(user_phoneNum) == 0 :
+            return flask.redirect(flask.url_for('login_page'))
+
+        else :
+            try :
+                table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
+                result_proxy = connection.execute(query)
+                result_proxy.close()
+                return flask.redirect(flask.url_for('index'))
+
+            except :
+                return flask.redirect(flask.url_for('login_page'))
+
+    elif request.method == 'GET' :
+        # print("get")
+        return flask.redirect(flask.url_for('login_page'))
 
 #실시간 정보공유 페이지
 @app.route('/total')
@@ -242,5 +293,5 @@ def total():
     return render_template('total.html')
 
 if __name__ == '__main__':
-    app.run('localhost', 4997)
+    app.run(host='0.0.0.0', debug=True)
 
