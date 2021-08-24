@@ -76,7 +76,6 @@ def preprocess(img) :
 #0은 전면, 1은 후면
 
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
-# cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
@@ -213,6 +212,8 @@ def save_img(): # 이미지 저장
 
     file_path = 'static/complete/' + str(text) + '.jpg'
     cv2.imwrite(file_path, img)
+
+
 
     # temp 폴더 내 파일 제거
     path_dir = 'static/image'
