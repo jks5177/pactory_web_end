@@ -148,7 +148,7 @@ def register():
 
 #로그인 페이지
 # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
-@app.route('/login', methods=['GET', 'POST'])	
+@app.route('/', methods=['GET', 'POST'])
 def login():
 	if request.method=='GET':
 		return render_template('login.html')
@@ -159,7 +159,7 @@ def login():
 			data = User.query.filter_by(userid=userid, user_name=user_name).first()	# ID/PW 조회Query 실행
 			if data is not None:	# 쿼리 데이터가 존재하면
 				session['userid'] = userid	# userid를 session에 저장한다.
-				return redirect('/')
+				return redirect('/main')
 			else:
 				return 'Dont Login'	# 쿼리 데이터가 없으면 출력
 		except:
@@ -174,7 +174,7 @@ def logout():
     
 
 #메인 페이지
-@app.route('/')
+@app.route('/main')
 def index():
     return render_template('index.html')
 
@@ -279,9 +279,9 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
 
 
 #선박 접안예측 페이지 
-@app.route('/port')
-def port():
-    return render_template('port.html')
+@app.route('/login')
+def login2():
+    return render_template('login.html')
 
 #실시간 정보공유 페이지
 @app.route('/total')
