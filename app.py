@@ -65,9 +65,9 @@ def preprocess(img) :
         for j in range(0,100,2) :
             if i[0][0] == i[1][0] :
                 # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (112,230,230), 2)
+                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (42,204,246), 2)
             elif i[0][1] == i[1][1] :
-                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (112,230,230), 2)
+                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
 
 
@@ -75,7 +75,7 @@ def preprocess(img) :
 
 #0은 전면, 1은 후면
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 # #사용자 등록 페이지
@@ -122,7 +122,7 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # 	session.pop('userid', None)
 # 	return redirect('/')
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
