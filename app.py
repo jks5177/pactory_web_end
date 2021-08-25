@@ -7,7 +7,7 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from model import Fcuser
 #from flask_wtf.csrf import CSRFProtect
 #from form import ResiterForm,LoginForm
-from mysqlx import connection
+# from mysqlx import connection
 
 # from model.user_model import User
 
@@ -25,26 +25,26 @@ from flask import Flask, render_template
 import socket
 
 import pandas as pd
-import sqlalchemy as db
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-import pymysql
-pymysql.install_as_MySQLdb()
-
-# db 연동
-engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-
-# db Base 클래스 생성 => DB를 가져올 class를 생성함
-Base = declarative_base()
-Base.query = db_session.query_property()
-
-# DB 가져오기
-connection = engine.connect()
-metadata = Base.metadata
-metadata.create_all(engine)
+# import sqlalchemy as db
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import scoped_session, sessionmaker
+# from sqlalchemy.ext.declarative import declarative_base
+#
+# import pymysql
+# pymysql.install_as_MySQLdb()
+#
+# # db 연동
+# engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+# db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+#
+# # db Base 클래스 생성 => DB를 가져올 class를 생성함
+# Base = declarative_base()
+# Base.query = db_session.query_property()
+#
+# # DB 가져오기
+# connection = engine.connect()
+# metadata = Base.metadata
+# metadata.create_all(engine)
 
 app = Flask(__name__)
 
