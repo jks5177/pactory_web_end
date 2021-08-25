@@ -1,4 +1,5 @@
 import flask
+import sqlalchemy.sql.expression
 from flask import Flask, render_template, Response
 from flask import Flask, url_for, render_template, request, redirect, session
 
@@ -6,6 +7,9 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from model import Fcuser
 #from flask_wtf.csrf import CSRFProtect
 #from form import ResiterForm,LoginForm
+# from mysqlx import connection
+
+# from model.user_model import User
 
 import os
 from importlib import import_module
@@ -16,8 +20,33 @@ import numpy as np
 import time
 import datetime
 import sys
-from flask import Flask
 from flask import Flask, render_template
+
+import socket
+
+import pandas as pd
+import sqlalchemy as db
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
+# # db 연동
+# #root:내비번
+# engine = create_engine("mysql://root:skdlsxls19@127.0.0.1:3306/loading_db")
+# db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+#
+# # db Base 클래스 생성 => DB를 가져올 class를 생성함
+# Base = declarative_base()
+# Base.query = db_session.query_property()
+#
+# # DB 가져오기
+# connection = engine.connect()
+# metadata = Base.metadata
+# metadata.create_all(engine)
+
 app = Flask(__name__)
 
 '''
@@ -65,18 +94,18 @@ def preprocess(img) :
         for j in range(0,100,2) :
             if i[0][0] == i[1][0] :
                 # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (112,230,230), 2)
+                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (42,204,246), 2)
             elif i[0][1] == i[1][1] :
-                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (112,230,230), 2)
+                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
 
+def insert_cargo(cargo_vin, vessel_name) :
+    car_vin = text[4:9]
+    car_table = db.Table('car', metadata, autoload=True, autoload_with=engine)
+    query = db.select([car_table]).where()
 
-#camera = cv2.VideoCapture(0)
 
 #0은 전면, 1은 후면
-
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
-# cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 # #사용자 등록 페이지
 # @app.route('/register', methods=['GET','POST'])
@@ -122,7 +151,10 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 # 	session.pop('userid', None)
 # 	return redirect('/')
 
+
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
@@ -149,7 +181,7 @@ def register():
 #로그인 페이지
 # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
 @app.route('/', methods=['GET', 'POST'])
-def login():
+def login_page():
 	if request.method=='GET':
 		return render_template('login.html')
 	else:
@@ -168,11 +200,10 @@ def login():
 @app.route('/logout', methods=['GET'])
 def logout():
 	session.pop('userid', None)
+
 	return redirect('/') 
 
-
-    
-
+# >>>>>>> bea2b569512e87b3fe1f82db4404b7cfd92ad3b2
 #메인 페이지
 @app.route('/main')
 def index():
@@ -212,24 +243,29 @@ def taking_picture(): # 사진을 저장하는 페이지
     for i in range(len(d['text'])):
         # print(i)
         text = d['text'][i].strip()
-        if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 15:
+        if (text.startswith('KM') or text.startswith('KN')) and len(text) > 15:
             # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
             frame = cv2.rectangle(frame, (x-5, y-3), (x + w+10, y + h+6), (0, 255, 0), 2) # 해당 위치에 bounding box 생성
-            text = d['text'][i]
+            # text = d['text'][i]
 
             # 파일 이름 생성
             now = time.localtime()
             s = '%04d-%02d-%02d-%02d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
             file_path = 'image/check_'+s+'.jpg'
 
+            directory = 'static/image'
+
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
             # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
-            cv2.imwrite('static/'+file_path,frame)
+            cv2.imwrite('static/'+file_path, frame)
             cv2.imwrite('static/image/check.jpg', frame)
 
             # text 파일 생성, 나중에 파일 이름으로 사용될 OCR 결과 값
             f = open("static/image/check.txt", 'w')
-            f.write(d['text'][i])
+            f.write(text)
             f.close()
 
             time.sleep(1)
@@ -277,13 +313,42 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST' :
+        # print("post")
+        user_company = request.form['user_company']
+        user_name = request.form['user_name']
+        user_phoneNum = request.form['user_phoneNum']
+        if len(user_company) == 0 or len(user_name) == 0 or len(user_phoneNum) == 0 :
+            return flask.redirect(flask.url_for('login_page'))
 
+        else :
+            # print("else")
+            try :
+                table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
+                result_proxy = connection.execute(query)
+                # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
+                result_proxy.close()
+                return flask.redirect(flask.url_for('index'))
 
+            except :
+                return flask.redirect(flask.url_for('login_page'))
+
+    elif request.method == 'GET' :
+        # print("get")
+        return flask.redirect(flask.url_for('login_page'))
 
 #실시간 정보공유 페이지
 @app.route('/total')
 def total():
     return render_template('total.html')
+    
+#스케쥴 페이지
+@app.route('/table')
+def table():
+    return render_template('table.html')
 
 @app.route('/info')
 def info():
@@ -297,10 +362,5 @@ def cal3():
 def worker():
     return render_template('worker.html')
 
-#
-
-
-
 if __name__ == '__main__':
-    app.run('localhost', 5000)
-
+    app.run('localhost', 4997)

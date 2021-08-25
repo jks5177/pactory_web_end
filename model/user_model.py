@@ -9,4 +9,12 @@ class User(db.Model):
     userid = db.Column(db.Integer, primary_key = True)
     user_name = db.Column(db.String(8))
     user_company = db.Column(db.String(32))
+
+    def __init__(self, userid, user_name, user_company):
+        self.userid = userid
+        self.user_name = user_name
+        self.user_company = user_company
+
+    # def create(self, id, name, company):
+
    
