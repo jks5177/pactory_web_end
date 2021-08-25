@@ -278,16 +278,29 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-#선박 접안예측 페이지 
-@app.route('/login')
-def login2():
-    return render_template('login.html')
+
 
 #실시간 정보공유 페이지
 @app.route('/total')
 def total():
     return render_template('total.html')
 
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
+@app.route('/cal')
+def cal3():
+    return render_template('schedule.html')
+
+@app.route('/worker')
+def worker():
+    return render_template('worker.html')
+
+#
+
+
+
 if __name__ == '__main__':
-    app.run('localhost', 4997)
+    app.run('localhost', 5000)
 
