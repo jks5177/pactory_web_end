@@ -9,7 +9,7 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from form import ResiterForm,LoginForm
 from mysqlx import connection
 
-from model.user_model import User
+# from model.user_model import User
 
 import os
 from importlib import import_module
@@ -97,6 +97,12 @@ def preprocess(img) :
             elif i[0][1] == i[1][1] :
                 cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
+
+def insert_cargo(cargo_vin, vessel_name) :
+    car_vin = text[4:9]
+    car_table = db.Table('car', metadata, autoload=True, autoload_with=engine)
+    query = db.select([car_table]).where()
+
 
 #0은 전면, 1은 후면
 
@@ -257,8 +263,6 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
-#선박 접안예측 페이지 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' :
@@ -294,7 +298,17 @@ def total():
 def table():
     return render_template('table.html')
 
+@app.route('/info')
+def info():
+    return render_template('info.html')
+
+@app.route('/cal')
+def cal3():
+    return render_template('schedule.html')
+
+@app.route('/worker')
+def worker():
+    return render_template('worker.html')
 
 if __name__ == '__main__':
-    app.run('localhost', 4997)
-
+    app.run('localhost', 5000)
