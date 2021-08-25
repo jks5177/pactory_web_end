@@ -34,7 +34,8 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # db 연동
-engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+#root:내비번
+engine = create_engine("mysql://root:skdlsxls19@127.0.0.1:3306/loading_db")
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 # db Base 클래스 생성 => DB를 가져올 class를 생성함
@@ -103,12 +104,11 @@ def preprocess(img) :
 
 #0은 전면, 1은 후면
 
-<<<<<<< HEAD
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
-=======
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
->>>>>>> 6416fa5827ed72f8346ccb436b9416815ab75626
+#cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
+
+#cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
+
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 # #사용자 등록 페이지
@@ -155,11 +155,11 @@ cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
 # 	session.pop('userid', None)
 # 	return redirect('/')
 
-<<<<<<< HEAD
+
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
-=======
+
 # cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
->>>>>>> 6416fa5827ed72f8346ccb436b9416815ab75626
+
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
@@ -205,13 +205,11 @@ def login_page():
 @app.route('/logout', methods=['GET'])
 def logout():
 	session.pop('userid', None)
-<<<<<<< HEAD
+
 	return redirect('/') 
 
-    
-=======
 	return redirect('/')
->>>>>>> 6416fa5827ed72f8346ccb436b9416815ab75626
+
 
 #메인 페이지
 @app.route('/main')
@@ -335,10 +333,12 @@ def login():
             return flask.redirect(flask.url_for('login_page'))
 
         else :
+            # print("else")
             try :
                 table = db.Table('login', metadata, autoload=True, autoload_with=engine)
                 query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
                 result_proxy = connection.execute(query)
+                # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
                 result_proxy.close()
                 return flask.redirect(flask.url_for('index'))
 
@@ -361,5 +361,5 @@ def table():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run('localhost',4997, debug=True)
 
