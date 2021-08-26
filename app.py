@@ -99,21 +99,13 @@ def preprocess(img) :
                 cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
 
-def insert_cargo(cargo_vin, vessel_name) :
-    car_vin = text[4:9]
-    car_table = db.Table('car', metadata, autoload=True, autoload_with=engine)
-    query = db.select([car_table]).where()
+# def insert_cargo(cargo_vin, vessel_name) :
+#     car_vin = text[4:9]
+#     car_table = db.Table('car', metadata, autoload=True, autoload_with=engine)
+#     query = db.select([car_table]).where()
 
 
 #0은 전면, 1은 후면
-
-<<<<<<< HEAD
-
-#cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
-
-#cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
-
-# cam = cv2.VideoCapture(cv2.CAP_DSHOW)
 
 # #사용자 등록 페이지
 # @app.route('/register', methods=['GET','POST'])
@@ -159,14 +151,8 @@ def insert_cargo(cargo_vin, vessel_name) :
 # 	session.pop('userid', None)
 # 	return redirect('/')
 
+cam = cv2.VideoCapture(1) # 아리
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
-
-# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
-
-=======
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
->>>>>>> bea2b569512e87b3fe1f82db4404b7cfd92ad3b2
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
@@ -212,17 +198,17 @@ def login_page():
 @app.route('/logout', methods=['GET'])
 def logout():
 	session.pop('userid', None)
-<<<<<<< HEAD
+
 
 	return redirect('/') 
 
 	return redirect('/')
 
 
-=======
+
 	return redirect('/') 
 
->>>>>>> bea2b569512e87b3fe1f82db4404b7cfd92ad3b2
+
 #메인 페이지
 @app.route('/main')
 def index():
@@ -332,6 +318,7 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+#로그인 페이지 찐 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' :
@@ -359,6 +346,46 @@ def login():
         # print("get")
         return flask.redirect(flask.url_for('login_page'))
 
+#프론트 스케쥴 페이지 
+@app.route('/schedule')
+def schedule_page():
+    return render_template('schedule.html')
+
+
+# 백 스케쥴 페이지 
+@app.route('/schedule_', methods=['GET', 'POST'])
+def schedule():
+    print("in")
+    if request.method == 'POST':
+        schedule_import = request.form['schedule_import']
+        schedule_export = request.form['schedule_export']
+        vessel_name = request.form['vessel_name']
+        schedule_ton = request.form['schedule_ton']
+        print(type(schedule_ton), type(schedule_export), type(schedule_import), type(vessel_name))
+        if len(schedule_import) == 0 or len(schedule_export) == 0 or len(vessel_name) == 0 :
+            return flask.redirect(flask.url_for('schedule_page'))
+        else : 
+            print("else")
+            # try :
+            table = db.Table('schedule', metadata, autoload=True, autoload_with=engine)
+            query = db.insert(table).values(SCHEDULE_IMPORT=schedule_import, SCHEDULE_EXPORT=schedule_export, SCHEDULE_VESSEL_NAME=vessel_name, SCHEDULE_TON=schedule_ton)
+            result_proxy = connection.execute(query)
+            result_proxy.close()
+            return flask.redirect(flask.url_for('schedule_page'))  
+            # except:
+            #     return flask.redirect(flask.url_for('schedule_page')) 
+    elif request.method == 'GET' :
+        print("get")
+        return flask.redirect(flask.url_for('schedule_page')) 
+
+
+
+
+
+
+#    return render_template('schedule.html')
+    
+
 #실시간 정보공유 페이지
 @app.route('/total')
 def total():
@@ -373,18 +400,10 @@ def table():
 def info():
     return render_template('info.html')
 
-<<<<<<< HEAD
-if __name__ == '__main__':
-    app.run('localhost',4997, debug=True)
-=======
-@app.route('/cal')
-def cal3():
-    return render_template('schedule.html')
->>>>>>> bea2b569512e87b3fe1f82db4404b7cfd92ad3b2
-
 @app.route('/worker')
 def worker():
     return render_template('worker.html')
 
 if __name__ == '__main__':
-    app.run('localhost', 5000)
+    app.run('localhost',4997, debug=True)
+

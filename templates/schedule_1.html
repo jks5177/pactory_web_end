@@ -30,28 +30,28 @@
 
   <form id="event-form">
      <div class='calander_popip_title'><i class="fa fa-calendar" aria-hidden="true"></i>
-스케줄 추가</div>
+Add Event</div>
     <ul>
       <li>
         <label for="event-start"><i class="fa fa-bell-o" aria-hidden="true"></i>
 
-입항</label>
+From</label>
         <input id="event-start"  class='form-control' type="datetime-local" name="start"/>
       </li>
       <li>
         <label for="event-end"><i class="fa fa-bell-slash" aria-hidden="true"></i>
 
-출항</label>
+To</label>
         <input id="event-end"  class='form-control' type="datetime-local" name="end"/>
       </li>
       <li>
         <label for="event-title"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
-선박이름</label>
+Event Name</label>
         <input id="event-title"  class='form-control' type="text" name="title"/>
       </li>
       <li>
         <label for="event-location"><i class="fa fa-map-marker" aria-hidden="true"></i>
-총 톤수</label>
+Location</label>
         <input id="event-location"   class='form-control' type="text" name="location"/>
       </li>
       <li>
@@ -60,7 +60,7 @@ Description</label>
         <textarea id="event-details"  class='form-control' name="details"></textarea>
       </li>
       <div class="button">
-        <input type="submit" class='form-control submit_btn'/>
+        <input type="submit"  class='form-control submit_btn'/>
       </div>
     </ul>
   </form>
@@ -98,39 +98,40 @@ Details:</p>
   </div>
 </div>
 
-<form method="POST" action="/schedule_">
+
 <div class='modle' id='simplemodal'>
   <div class='modle-continer'>
       <form id="edit-form">
 
     <div class='modal-header'>
         <span class='close-btn' id='close-btnid'>&times</span>
-      <h2>스케줄 확정</h2>
+      <h2>Edit Event</h2>
     </div>
    <div class='modal-body'>
 
-     <lable for='eventname'>선박이름</lable>
-     <input type='text' name='vessel_name' id='eventname' class='form-control'>
-     <lable for='location'>총 톤수</lable>
-     <input type='text' name='schedule_ton' id='location' class='form-control'>
+     <lable for='eventname'>Event Name</lable>
+     <input type='text' name='eventname' id='eventname' class='form-control'>
+     <lable for='location'>Location</lable>
+     <input type='text' name='location' id='location' class='form-control'>
 
-     <label for="event-start">입항</label><input id="eventstart" type="datetime-local" name="schedule_impor" class='form-control'/>
+     <label for="event-start">From</label><input id="eventstart" type="datetime-local" name="start" class='form-control'/>
 
-     <label for="event-end">출항</label>
-        <input id="eventend" type="datetime-local" name="schedule_export" class='form-control'/>
+     <label for="event-end">To</label>
+        <input id="eventend" type="datetime-local" name="end" class='form-control'/>
       <label for="event-details">Details</label>
-     <textarea id="eventdetails" type='text' name="detail"  class='form-control'></textarea>
+     <textarea id="eventdetails" type='text' name="details"  class='form-control'></textarea>
 
     </div>
     <div class='modal-footer'>
-      <button type='submit' class='btn btn-info' onClick="location.href='/schedule'">save</button>
-      <button class='btn btn-dafault' onClick="location.href='/schedule'">cancel</button>
+      <button type='submit' class='btn btn-info'>save</button>
+      <button class='btn btn-dafault'>cancel</button>
+
     </div>
     </form>
   </div>
 
 </div>
-</form>
+
 <div id='search_result'>result</div>
 <button class='btn btn-primary'>Add Events</button>
 <!-- partial -->
