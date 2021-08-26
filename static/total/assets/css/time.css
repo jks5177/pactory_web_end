@@ -5,7 +5,7 @@ body {
 .wrap {
   position: absolute;
   bottom: 0;
-  top: 0;
+  top: 550px;
   left: 0;
   right: 0;
   margin: auto;

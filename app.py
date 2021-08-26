@@ -7,7 +7,7 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from model import Fcuser
 #from flask_wtf.csrf import CSRFProtect
 #from form import ResiterForm,LoginForm
-from mysqlx import connection
+# from mysqlx import connection
 
 # from model.user_model import User
 
@@ -25,6 +25,7 @@ from flask import Flask, render_template
 import socket
 
 import pandas as pd
+
 import sqlalchemy as db
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -34,7 +35,9 @@ import pymysql
 pymysql.install_as_MySQLdb()
 
 # db 연동
+#root:내비번
 engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 # db Base 클래스 생성 => DB를 가져올 class를 생성함
@@ -156,6 +159,8 @@ def insert_cargo(cargo_vin, vessel_name) :
 
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
 
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -165,6 +170,7 @@ def register():
 # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
+
     return render_template('login.html')
 
 #메인 페이지
@@ -319,10 +325,12 @@ def login():
             return flask.redirect(flask.url_for('login_page'))
 
         else :
+            # print("else")
             try :
                 table = db.Table('login', metadata, autoload=True, autoload_with=engine)
                 query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
                 result_proxy = connection.execute(query)
+                # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
                 result_proxy.close()
                 return flask.redirect(flask.url_for('index'))
 
@@ -383,4 +391,4 @@ def worker():
     return render_template('worker.html')
 
 if __name__ == '__main__':
-    app.run('localhost', 5000)
+    app.run('localhost', 4997)
