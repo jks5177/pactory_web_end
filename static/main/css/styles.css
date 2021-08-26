@@ -6726,10 +6726,6 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex {
-  display: flex !important;
-}
-
 .d-inline-flex {
   display: inline-flex !important;
 }
@@ -9775,12 +9771,6 @@ s
     padding-left: 1.5rem !important;
   }
 
-  .px-lg-5 {
-    padding-right: 5rem !important;
-    padding-left: 5rem !important;
-    padding-bottom: inherit;
-  }
-
   .py-lg-0 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -11413,7 +11403,6 @@ html {
   padding: 1.25rem 2.5rem;
 }
 
-
 footer.footer {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -11486,3 +11475,9 @@ footer.footer .social-link:hover {
   font-size: 2.25rem;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> 1e1794017c033eac53ceb56898892e3d55c94edd

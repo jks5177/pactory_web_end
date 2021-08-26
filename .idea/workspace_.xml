@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="6df3541f-3c65-4b8c-a50d-7abd43cbd3f9" name="Changes" comment="">
+<<<<<<<< HEAD:.idea/workspace_.xml
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/complete/KMHS281BBKUI14241.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-16-48-54.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-18-52-25.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-18-55-02.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-18-57-40.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-18-59-25.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-20-57-32.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/image/check_2021-08-24-23-36-32.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/schedule.html" afterDir="false" />
+========
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_ocr_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_ocr_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_port.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_port.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_total.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_total.png" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VESSEL_TABLE_INSERT.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loading_DB.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/camera_result/assets/css/camera_result.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/camera_result/assets/js/camera_result.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/complete/KMHS281BBKUI14241.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/1-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/1-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/10-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/10-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/10-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/10-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/11-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/11-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/11-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/11-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/2-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/2-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/2-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/3-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/3-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/3-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/4-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/4-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/4-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/5-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/5-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/5-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/5-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/6-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/6-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/6-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/6-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/7-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/7-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/7-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/7-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/8-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/8-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/8-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/8-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/9-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/9-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/9-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/deak/asset/image/9-4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-16-48-54.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-18-52-25.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-18-55-02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-18-57-40.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-18-59-25.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-20-57-32.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/image/check_2021-08-24-23-36-32.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login/assets/img/01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login/assets/img/red_ship.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login/assets/img/roro_ship.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/total/assets/css/time.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/total/assets/img/glovis.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/total/assets/js/scripts/script.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/total/assets/js/time.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/total/assets/vendors/time.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/deak.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/time.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pactory-web.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/user_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/user_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/complete/KMTGB41CBMU032768.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/login/assets/img/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/login/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/login/css/main.css" afterDir="false" />
+>>>>>>> 558163fe0bd5bf37c8cecd07954f6359f93a67eb
+      <change beforePath="$PROJECT_DIR$/static/main/assets/img/main3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/main3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/camera.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/camera_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera_result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/templates/info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/total.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/total.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/worker.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/worker.html" afterDir="false" />
+>>>>>>> 558163fe0bd5bf37c8cecd07954f6359f93a67eb
+>>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf:.idea/workspace.xml
+=======
+    <list default="true" id="7aa3a24b-f319-4bde-b283-ca5c92da320c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/static/main/js/click.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ari.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+<<<<<<< HEAD
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+<<<<<<< HEAD
+    <setting file="file://$PROJECT_DIR$/templates/camera.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/index.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/camera_result.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/login.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/total.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/static/camera/assets/css/styles.css" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app.py" root0="FORCE_HIGHLIGHTING" />
+=======
+    <setting file="file://$PROJECT_DIR$/app.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/total.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/static/camera/assets/css/styles.css" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/camera.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/index.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/camera_result.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/login.html" root0="FORCE_HIGHLIGHTING" />
+>>>>>>> 558163fe0bd5bf37c8cecd07954f6359f93a67eb
+  </component>
+  <component name="ProjectId" id="1wrjN2UhdAsVjn6nlTNNvSk0OC5" />
+=======
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1x87x7LIGkEiDzcqSs0eo78a8Ra" />
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+<<<<<<< HEAD
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../web_page" />
+>>>>>>> 558163fe0bd5bf37c8cecd07954f6359f93a67eb
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\BigAI\울산항만공사\pactory-web\static\deak\asset\css" />
+      <recent name="E:\BigAI\울산항만공사\pactory-web\static\info" />
+      <recent name="E:\BigAI\울산항만공사\pactory-web\static\camera\assets\css" />
+      <recent name="E:\BigAI\울산항만공사\pactory-web\static\img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\BigAI\울산항만공사\pactory-web\static\info\assets\js" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python">
+=======
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app.py" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\git\pactory-web\static" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="app.py" type="PythonConfigurationType" factoryName="Python">
+      <module name="pactory-web" />
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <option name="SDK_HOME" value="C:\Users\ktaehyun\Anaconda3\python.exe" />
+=======
+      <option name="SDK_HOME" value="D:\git\pactory-web\venv\Scripts\python.exe" />
+>>>>>>> 558163fe0bd5bf37c8cecd07954f6359f93a67eb
+=======
+      <option name="SDK_HOME" value="D:\git\pactory-web\venv\Scripts\python.exe" />
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+<<<<<<< HEAD
+      <module name="" />
+=======
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
+      <changelist id="6df3541f-3c65-4b8c-a50d-7abd43cbd3f9" name="Changes" comment="" />
+      <created>1629223562877</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629223562877</updated>
+=======
+      <changelist id="7aa3a24b-f319-4bde-b283-ca5c92da320c" name="Changes" comment="" />
+      <created>1629725106026</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629725106026</updated>
+>>>>>>> 56427314303fa019e8485c9006f3497e2137bfcf
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

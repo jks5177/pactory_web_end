@@ -7,7 +7,7 @@ from flask import Flask, url_for, render_template, request, redirect, session
 #from model import Fcuser
 #from flask_wtf.csrf import CSRFProtect
 #from form import ResiterForm,LoginForm
-from mysqlx import connection
+# from mysqlx import connection
 
 # from model.user_model import User
 
@@ -25,8 +25,9 @@ from flask import Flask, render_template
 import socket
 
 import pandas as pd
+
 import sqlalchemy as db
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -35,7 +36,8 @@ pymysql.install_as_MySQLdb()
 
 # db 연동
 #root:내비번
-engine = create_engine("mysql://root:skdlsxls19@127.0.0.1:3306/loading_db")
+engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 # db Base 클래스 생성 => DB를 가져올 class를 생성함
@@ -62,6 +64,54 @@ ret, frame = cam.read()
 cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
 ret, frame = cam.read()
 '''
+
+import json
+
+with open('static/car_vin.json', 'r+', encoding='utf8') as f :
+    json_data = json.load(f)
+
+def vin_decoder(car_vin):
+    decode_list = []
+    if car_vin[0] in json_data['car_num0'].keys():
+        decode_list.append(json_data['car_num0'][car_vin[0]])
+        # print('국가 :', json_data['car_num0'][car_vin[0]])
+    if car_vin[1] in json_data['car_num1'].keys():
+        decode_list.append(json_data['car_num1'][car_vin[1]])
+        # print('회사 :', json_data['car_num1'][car_vin[1]])
+    if car_vin[2] in json_data['car_num2'].keys():
+        decode_list.append(json_data['car_num2'][car_vin[2]])
+        # print('차량형태 :',json_data['car_num2'][car_vin[2]])
+    if car_vin[3] in json_data['car_num3'].keys():
+        decode_list.append(json_data['car_num3'][car_vin[3]])
+        # print('차종류 :',json_data['car_num3'][car_vin[3]])
+        if type(json_data['car_num3'][car_vin[3]]) == list:
+            if car_vin[4] in json_data['car_num4'].keys():
+                try :
+                    car = set([json_data['car_num4'][car_vin[4]]]).intersection(set(json_data['car_num3'][car_vin[3]]))
+                except :
+                    car = set(json_data['car_num3'][car_vin[3]]).intersection(list(json_data['car_num4'][car_vin[4]]))
+                decode_list.append(list(car)[0])
+                # print('차량상세:', list(car)[0] )
+    if car_vin[5] in json_data['car_num5'].keys():
+        decode_list.append(json_data['car_num5'][car_vin[5]])
+        # print(json_data['car_num5'][car_vin[5]])
+    if car_vin[6] in json_data['car_num6'].keys():
+        decode_list.append(json_data['car_num6'][car_vin[6]])
+        # print('차량형태:', json_data['car_num6'][car_vin[6]])
+    if car_vin[7] in json_data['car_num7'].keys():
+        decode_list.append(json_data['car_num7'][car_vin[7]])
+        # print('차정보1 : ', json_data['car_num7'][car_vin[7]])
+    if car_vin[8] in json_data['car_num8'].keys():
+        decode_list.append(json_data['car_num8'][car_vin[8]])
+        # print(json_data['car_num8'][car_vin[8]])
+    if car_vin[9] in json_data['car_num9'].keys():
+        decode_list.append(json_data['car_num9'][car_vin[9]])
+        # print(json_data['car_num9'][car_vin[9]])
+    if car_vin[10] in json_data['car_num10'].keys():
+        decode_list.append(json_data['car_num10'][car_vin[10]])
+        # print('제조공장 :',json_data['car_num10'][car_vin[10]])
+    return decode_list
+
 # 사각형 이미지 detection
 def preprocess(img) :
     import cv2
@@ -107,6 +157,7 @@ def preprocess(img) :
 
 #0은 전면, 1은 후면
 
+<<<<<<< HEAD
 # #사용자 등록 페이지
 # @app.route('/register', methods=['GET','POST'])
 # def register():
@@ -153,33 +204,22 @@ def preprocess(img) :
 
 cam = cv2.VideoCapture(1) # 아리
 
+=======
+cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
+
+# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
 
 #사용자 등록 페이지
 @app.route('/register', methods=['GET','POST'])
 def register():
-	# if request.method =='GET':
-	#     return render_template("register.html")
-	# else:
-        #userid = request.form.get('userid')
-        #user_name = request.form.get('user_name')
-        #user_company = request.form.get('user_company')
-
-    # if not (user_company and userid and user_name):
-	# 	return "모두 입력해주세요"
-    # else:
-	# 	user = User()
-	# 	user.userid = userid
-	# 	user.user_name = user_name
-    #     user.user_company = user_company
-    #     db.session.add(user)
-	# 	db.session.commit()
-	# 	return "회원가입 완료"
     return redirect('/')
 
 #로그인 페이지
 # login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
 @app.route('/', methods=['GET', 'POST'])
 def login_page():
+<<<<<<< HEAD
 	if request.method=='GET':
 		return render_template('login.html')
 	else:
@@ -208,6 +248,10 @@ def logout():
 
 	return redirect('/') 
 
+=======
+
+    return render_template('login.html')
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
 
 #메인 페이지
 @app.route('/main')
@@ -248,7 +292,7 @@ def taking_picture(): # 사진을 저장하는 페이지
     for i in range(len(d['text'])):
         # print(i)
         text = d['text'][i].strip()
-        if (text.startswith('KM') or text.startswith('KN')) and len(text) > 15:
+        if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 11:
             # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
             frame = cv2.rectangle(frame, (x-5, y-3), (x + w+10, y + h+6), (0, 255, 0), 2) # 해당 위치에 bounding box 생성
@@ -296,12 +340,33 @@ def save_img(): # 이미지 저장
     img = cv2.imread('static/image/check.jpg')
 
     f = open("static/image/check.txt", 'r')
-    text = f.read()
+    cargo_vin = f.read()
     f.close()
-    print(text)
+    print(cargo_vin)
 
-    file_path = 'static/complete/' + str(text) + '.jpg'
+    file_path = 'static/complete/' + str(cargo_vin) + '.jpg'
     cv2.imwrite(file_path, img)
+
+    # db 저장 - test 하기
+    decode_list = vin_decoder(cargo_vin)
+    car_name = decode_list[4]
+    print(car_name)
+
+    car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
+    cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
+    
+    now = time.localtime()
+    now_time = "%04d/%02d/%02d %02d:%02d:%02d"%(now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+
+    ip = socket.gethostbyname(socket.gethostname())
+
+    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
+    phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
+
+    table = db.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    query = db.insert(table).values(CARGO_VIN=cargo_vin,IMAGE_PATH=file_path,VESSEL_NAME="GLOVIS SIRIUS",CARGO_NAME=car_name,CARGO_WEIGHT=cargo_weight,CARGO_INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum)
+    result_proxy = connection.execute(query)
+    result_proxy.close()
 
     # temp 폴더 내 파일 제거
     path_dir = 'static/image'
@@ -318,7 +383,21 @@ def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+<<<<<<< HEAD
 #로그인 페이지 찐 
+=======
+@app.route('/logout')
+def logout() :
+    ip = socket.gethostbyname(socket.gethostname())
+
+    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
+
+    db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).delete()
+    db_session.commit()
+
+    return flask.redirect(flask.url_for('login_page'))
+
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' :
@@ -400,10 +479,48 @@ def table():
 def info():
     return render_template('info.html')
 
+<<<<<<< HEAD
+=======
+@app.route('/cal')
+def cal3():
+    return render_template('schedule.html')
+
+@app.route('/schedule', methods=['GET', 'POST'])
+def schedule() :
+    if request.method == 'POST' :
+        print("post")
+        vessel_name = request.form['vessel_name']
+        ton = request.form['ton']
+        import_time = request.form['import']
+        export_time = request.form['export']
+        print(vessel_name, ton, import_time, export_time)
+        if len(vessel_name) == 0 or len(import_time) == 0 or len(export_time) == 0 :
+            print("non type")
+            return flask.redirect(flask.url_for('cal3'))
+        else :
+            try :
+                print("success")
+                # table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+                # query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
+                # result_proxy = connection.execute(query)
+                # result_proxy.close()
+                return flask.redirect(flask.url_for('index'))
+            except :
+                print("error")
+                return flask.redirect(flask.url_for('cal3'))
+    elif request.method == 'GET' :
+        print("get")
+        return flask.redirect(flask.url_for('cal3'))
+
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
 @app.route('/worker')
 def worker():
     return render_template('worker.html')
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run('localhost',4997, debug=True)
 
+=======
+    app.run('localhost', 4997)
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b

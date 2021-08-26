@@ -98,7 +98,11 @@ Details:</p>
   </div>
 </div>
 
+<<<<<<< HEAD
 <form method="POST" action="/schedule_">
+=======
+<form method="post", action="/schedule">
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
 <div class='modle' id='simplemodal'>
   <div class='modle-continer'>
       <form id="edit-form">
@@ -109,6 +113,7 @@ Details:</p>
     </div>
    <div class='modal-body'>
 
+<<<<<<< HEAD
      <lable for='eventname'>선박이름</lable>
      <input type='text' name='vessel_name' id='eventname' class='form-control'>
      <lable for='location'>총 톤수</lable>
@@ -118,6 +123,18 @@ Details:</p>
 
      <label for="event-end">출항</label>
         <input id="eventend" type="datetime-local" name="schedule_export" class='form-control'/>
+=======
+     <lable for='eventname'>선박 이름</lable>
+     <input type='text' name='vessel_name' id='eventname' class='form-control'>
+     <lable for='location'>톤 수</lable>
+     <input type='text' name='ton' id='location' class='form-control'>
+
+     <label for="event-start">입항</label>
+       <input id="eventstart" type="datetime-local" name="import" class='form-control'/>
+
+     <label for="event-end">출항</label>
+        <input id="eventend" type="datetime-local" name="export" class='form-control'/>
+>>>>>>> 2fe155b96eee17db35f947f2722500c9c8b8c37b
       <label for="event-details">Details</label>
      <textarea id="eventdetails" type='text' name="detail"  class='form-control'></textarea>
 
