@@ -43,10 +43,10 @@ body {
     <div class="row-cols-auto">
       <div class="col">
         <div style="text-align: center">
-          <h3 class="mt-5" style="color:#333333; font-size: 1em;">결과 사진입니다.</h3>
+          <h3 class="mt-5" style="color:#333333; font-size: 1.5em;">결과 사진입니다.</h3>
         </div>
         <div style="text-align: center">
-          <img src="{{ url_for('static', filename=image_file) }}" width="540px" height="540px">
+          <img src="{{ url_for('static', filename=image_file) }}" width="810px" height="810px">
         </div>
         <div style="text-align: center">
           <form action="save" method="GET">
@@ -58,9 +58,9 @@ body {
 
   <div class="col">
     <div style="text-align: center">
-        <input type='button' value='이전' onClick="location.href='/del'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
-        <input type="text" placeholder="틀렸으면 VIN을 입력하세요." name="VIN" style="width:190px; height:35px; font-size: 0.9em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;">
-        <input type='button' value='저장' onClick="location.href='/save'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
+        <input type='button' value='이전' onClick="location.href='/del'" style="width:265px; height:45px; font-size: 1.5em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
+        <input type="text" placeholder="틀렸으면 VIN을 입력하세요." name="VIN" style="width:275px; height:45px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;">
+        <input type='button' value='저장' onClick="location.href='/save'" style="width:265px; height:45px; font-size: 1.5em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
     </div>
   </div>
 </div>
