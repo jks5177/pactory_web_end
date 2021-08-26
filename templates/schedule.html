@@ -98,7 +98,7 @@ Details:</p>
   </div>
 </div>
 
-
+<form method="post", action="/schedule">
 <div class='modle' id='simplemodal'>
   <div class='modle-continer'>
       <form id="edit-form">
@@ -109,15 +109,16 @@ Details:</p>
     </div>
    <div class='modal-body'>
 
-     <lable for='eventname'>Event Name</lable>
-     <input type='text' name='eventname' id='eventname' class='form-control'>
-     <lable for='location'>Location</lable>
-     <input type='text' name='location' id='location' class='form-control'>
+     <lable for='eventname'>선박 이름</lable>
+     <input type='text' name='vessel_name' id='eventname' class='form-control'>
+     <lable for='location'>톤 수</lable>
+     <input type='text' name='ton' id='location' class='form-control'>
 
-     <label for="event-start">From</label><input id="eventstart" type="datetime-local" name="start" class='form-control'/>
+     <label for="event-start">입항</label>
+       <input id="eventstart" type="datetime-local" name="import" class='form-control'/>
 
-     <label for="event-end">To</label>
-        <input id="eventend" type="datetime-local" name="end" class='form-control'/>
+     <label for="event-end">출항</label>
+        <input id="eventend" type="datetime-local" name="export" class='form-control'/>
       <label for="event-details">Details</label>
      <textarea id="eventdetails" type='text' name="details"  class='form-control'></textarea>
 
@@ -131,7 +132,7 @@ Details:</p>
   </div>
 
 </div>
-
+</form>
 <div id='search_result'>result</div>
 <button class='btn btn-primary'>Add Events</button>
 <!-- partial -->
