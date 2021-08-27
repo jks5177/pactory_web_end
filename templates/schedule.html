@@ -5,7 +5,7 @@
   <title>CodePen - Event calendar </title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'><link rel="stylesheet" href="/static/main/css/schedule.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'><link rel="stylesheet" href="/static/main/css/schedule.css?e">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
 </head>
@@ -112,13 +112,13 @@ Details:</p>
      <lable for='eventname'>선박 이름</lable>
      <input type='text' name='vessel_name' id='eventname' class='form-control'>
      <lable for='location'>톤 수</lable>
-     <input type='text' name='ton' id='location' class='form-control'>
+     <input type='text' name='schedule_ton' id='location' class='form-control'>
 
      <label for="event-start">입항</label>
-       <input id="eventstart" type="datetime-local" name="import" class='form-control'/>
+       <input id="eventstart" type="datetime-local" name="schedule_import" class='form-control'/>
 
      <label for="event-end">출항</label>
-        <input id="eventend" type="datetime-local" name="export" class='form-control'/>
+        <input id="eventend" type="datetime-local" name="schedule_export" class='form-control'/>
       <label for="event-details">Details</label>
      <textarea id="eventdetails" type='text' name="details"  class='form-control'></textarea>
 
@@ -134,7 +134,7 @@ Details:</p>
 </div>
 </form>
 <div id='search_result'>result</div>
-<button class='btn btn-primary'>Add Events</button>
+<button type="button" class='btn btn-primary' onClick="location.href='/main'">main</button>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js'></script>

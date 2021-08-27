@@ -12,6 +12,7 @@
 <body>
 <!-- partial:index.partial.html -->
 <h1>오늘의 작업자 현황</h1>
+<form method="post", action="/worker_send">
 <table class="rwd-table">
   <tr>
     <th>Checker</th>
@@ -20,14 +21,13 @@
 
   </tr>
   <tr>
-    <td data-th="Movie Title"><input type="text" value ="인원수" name = "name"></td>
-    <td data-th="Genre"><input type="text" value ="인원수" name = "name"></td>
-    <td data-th="Year"><input type="text" value ="인원수" name = "name"></td>
-
+    <td data-th="Movie Title"><input type="text" placeholder ="인원수" name = "checker"></td>
+    <td data-th="Genre"><input type="text" placeholder ="인원수" name = "driver"></td>
+    <td data-th="Year"><input type="text" placeholder ="인원수" name = "lashing"></td>
   </tr>
-
-
 </table>
+  <input type="submit" class="button" value="Enter">
+</form>
 
 
 <!-- partial -->

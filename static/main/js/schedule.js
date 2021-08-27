@@ -216,14 +216,14 @@ $(document).ready(function() {
         }
         }
     ,
-    select: function(start, end, jsEvent) {
-        $('.btn-primary').css('opacity',1)
-          $('.btn-primary').click(function(){
-        renderPopup(jsEvent, start.local(), end.local());
-      }) 
-      renderPopup(jsEvent, start.local(), end.local());
-    
-    }
+//    select: function(start, end, jsEvent) {
+//        $('.btn-primary').css('opacity',1)
+//          $('.btn-primary').click(function(){
+//        renderPopup(jsEvent, start.local(), end.local());
+//      })
+//      renderPopup(jsEvent, start.local(), end.local());
+//
+//    }
   });
 
   $('#event-form').on('submit', function(e) {

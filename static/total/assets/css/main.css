@@ -6,11 +6,11 @@ body {
 
 .wrap {
   position: absolute;
-  bottom: 0;
+  bottom: 0;<button type="submit" style="height=">save</button>
   top: 0;
   left: 0;
   right: 0;
-  margin: auto;
+  margin: 0;
   height: 310px;
 }
 

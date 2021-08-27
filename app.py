@@ -149,11 +149,6 @@ def preprocess(img) :
                 cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
     return img
 
-def insert_cargo(cargo_vin, vessel_name) :
-    car_vin = text[4:9]
-    car_table = db.Table('car', metadata, autoload=True, autoload_with=engine)
-    query = db.select([car_table]).where()
-
 
 #0은 전면, 1은 후면
 
@@ -232,11 +227,6 @@ def taking_picture(): # 사진을 저장하는 페이지
             cv2.imwrite('static/'+file_path, frame)
             cv2.imwrite('static/image/check.jpg', frame)
 
-            # text 파일 생성, 나중에 파일 이름으로 사용될 OCR 결과 값
-            f = open("static/image/check.txt", 'w')
-            f.write(text)
-            f.close()
-
             time.sleep(1)
 
             return render_template('camera_result.html', image_file=file_path, text=text)
@@ -259,43 +249,88 @@ def save_img(): # 이미지 저장
     import os
     img = cv2.imread('static/image/check.jpg')
 
-    f = open("static/image/check.txt", 'r')
-    cargo_vin = f.read()
-    f.close()
-    print(cargo_vin)
+    if request.method == 'POST' :
+        # print("post")
+        cargo_vin = request.form['vin']
+        print(cargo_vin)
 
     file_path = 'static/complete/' + str(cargo_vin) + '.jpg'
     cv2.imwrite(file_path, img)
 
-    # db 저장 - test 하기
-    decode_list = vin_decoder(cargo_vin)
-    car_name = decode_list[4]
-    print(car_name)
-
-    car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
-    cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
-    
-    now = time.localtime()
-    now_time = "%04d/%02d/%02d %02d:%02d:%02d"%(now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
-
     ip = socket.gethostbyname(socket.gethostname())
-
     login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
-    phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
+    f_s = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][-1]
 
-    table = db.Table('cargo', metadata, autoload=True, autoload_with=engine)
-    query = db.insert(table).values(CARGO_VIN=cargo_vin,IMAGE_PATH=file_path,VESSEL_NAME="GLOVIS SIRIUS",CARGO_NAME=car_name,CARGO_WEIGHT=cargo_weight,CARGO_INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum)
-    result_proxy = connection.execute(query)
-    result_proxy.close()
+    # try:
+    if f_s == '1차' :
+        # db 저장
+        decode_list = vin_decoder(cargo_vin)
+        car_name = decode_list[4]
+        print(car_name)
 
-    # temp 폴더 내 파일 제거
-    path_dir = 'static/image'
-    file_list = os.listdir(path_dir)
-    for filename in file_list:
-        file_path = path_dir + '/' + filename
-        os.remove(file_path)
+        car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
+        cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
 
-    return flask.redirect(flask.url_for('camera'))
+        now = time.localtime()
+        now_time = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+
+        phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
+
+        table = db.Table('storage', metadata, autoload=True, autoload_with=engine)
+        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path,CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum)
+        result_proxy = connection.execute(query)
+        result_proxy.close()
+
+        # temp 폴더 내 파일 제거
+        path_dir = 'static/image'
+        file_list = os.listdir(path_dir)
+        for filename in file_list:
+            file_path = path_dir + '/' + filename
+            os.remove(file_path)
+
+        return flask.redirect(flask.url_for('camera'))
+
+    else :
+        # db 저장
+        decode_list = vin_decoder(cargo_vin)
+        car_name = decode_list[4]
+        print(car_name)
+
+        car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
+        cargo_weight = \
+        db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
+
+        now = time.localtime()
+        now_time = "%04d/%02d/%02d %02d:%02d:%02d" % (
+        now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+
+        phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
+
+        deck = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][5]
+
+        table = db.Table('cargo', metadata, autoload=True, autoload_with=engine)
+        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path, VESSEL_NAME="GLOVIS SIRIUS",
+                                        CARGO_NAME=car_name, CARGO_WEIGHT=cargo_weight, CARGO_INSPECT_TIME=now_time,
+                                        IP=ip, LI_PHONENUM=phoneNum, DECK=deck)
+        result_proxy = connection.execute(query)
+        result_proxy.close()
+
+        storage_table = sqlalchemy.Table('storage', metadata, autoload=True, autoload_with=engine)
+
+        db_session.query(storage_table).filter(text("CARGO_VIN=:cargo_vin")).params(cargo_vin=cargo_vin).delete()
+        db_session.commit()
+
+        # temp 폴더 내 파일 제거
+        path_dir = 'static/image'
+        file_list = os.listdir(path_dir)
+        for filename in file_list:
+            file_path = path_dir + '/' + filename
+            os.remove(file_path)
+
+        return flask.redirect(flask.url_for('camera'))
+
+    # except:
+    #     return flask.redirect(flask.url_for('camera'))
 
 
 @app.route('/video_feed')
@@ -321,18 +356,23 @@ def login():
         user_company = request.form['user_company']
         user_name = request.form['user_name']
         user_phoneNum = request.form['user_phoneNum']
-        if len(user_company) == 0 or len(user_name) == 0 or len(user_phoneNum) == 0 :
+        f_s = request.form = request.form['first_second']
+        if len(user_company) == 0 or len(user_name) == 0 or len(user_phoneNum) == 0 or len(f_s) == 0 :
             return flask.redirect(flask.url_for('login_page'))
 
         else :
             # print("else")
             try :
                 table = db.Table('login', metadata, autoload=True, autoload_with=engine)
-                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
+                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()), F_S=f_s)
                 result_proxy = connection.execute(query)
                 # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
                 result_proxy.close()
-                return flask.redirect(flask.url_for('index'))
+
+                if f_s == '1차' :
+                    return flask.redirect(flask.url_for('camera'))
+                else:
+                    return flask.redirect(flask.url_for('index'))
 
             except :
                 return flask.redirect(flask.url_for('login_page'))
@@ -344,8 +384,134 @@ def login():
 #실시간 정보공유 페이지
 @app.route('/total')
 def total():
-    return render_template('total.html')
-    
+
+    worker_table = sqlalchemy.Table('worker', metadata, autoload=True, autoload_with=engine)
+
+    try :
+        checker = db_session.query(worker_table).filter(text("WORKER_TASK='checker'")).all()[0][-1]
+        driver = db_session.query(worker_table).filter(text("WORKER_TASK='drive'")).all()[0][-1]
+        lashing = db_session.query(worker_table).filter(text("WORKER_TASK='lashing'")).all()[0][-1]
+
+    except :
+        checker = 0
+        driver = 0
+        lashing = 0
+
+    cargo_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    data = db_session.query(cargo_table).all()[:6]
+    # print(data)
+
+    date = datetime.datetime
+
+    deck = []
+    for i in range(1, 12) :
+        percent = (len(db_session.query(cargo_table).filter(text("DECK=:deck_num")).params(deck_num=i).all()) / 10) * 100
+        deck.append(percent)
+
+    ip = socket.gethostbyname(socket.gethostname())
+    total_num = len(db_session.query(cargo_table).filter(text("IP=:ip")).params(ip=ip).all())
+
+    schedule_table = sqlalchemy.Table('schedule', metadata, autoload=True, autoload_with=engine)
+    print(deck)
+    try :
+        import_time = []
+        export_time = []
+        vessel_name = []
+        schedule_list = db_session.query(schedule_table).filter(text("SCHEDULE_EXPORT>=:date")).filter(text("SCHEDULE_IMPORT<=:date")).params(date=date.now()).order_by(text("SCHEDULE_EXPORT")).all()
+        for i in schedule_list :
+            import_time.append(i[0])
+            export_time.append(i[1])
+            vessel_name.append(i[2])
+
+        limit_time = export_time[0] - date.now()
+
+        hour, minute, second = str(limit_time).split(':')
+
+        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num)
+    except :
+        print("except")
+        hour, minute, second = 0, 0, 0
+        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num)
+
+@app.route('/hol_dec_send', methods=['GET','POST'])
+def hol_dec_send() :
+    if request.method == 'POST' :
+        # print("post")
+
+        hold = request.form['hold']
+        deck = request.form['deck']
+
+        login_table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+        ip = socket.gethostbyname(socket.gethostname())
+        db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'DECK':deck, 'HOLD':hold}, synchronize_session=False)
+        db_session.commit()
+
+        return flask.redirect(flask.url_for('total'))
+
+    else :
+        return flask.redirect(flask.url_for('total'))
+
+@app.route('/vessel_send', methods=['GET','POST'])
+def vessel_send() :
+    if request.method == 'POST' :
+        # print("post")
+
+        vessel_name = request.form['vessel']
+
+        login_table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+        ip = socket.gethostbyname(socket.gethostname())
+        db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'VESSEL_NAME':vessel_name}, synchronize_session=False)
+        db_session.commit()
+
+        return flask.redirect(flask.url_for('total'))
+
+    else :
+        return flask.redirect(flask.url_for('total'))
+
+@app.route('/worker_send', methods=['GET', 'POST'])
+def worker_send() :
+    worker_table = db.Table('worker', metadata, autoload=True, autoload_with=engine)
+    db_session.query(worker_table).delete()
+    db_session.commit()
+
+    checker_task = 'checker'
+    drive_task = 'drive'
+    lashing_task = 'lashing'
+
+    if request.method == 'POST' :
+        # print("post")
+
+        checker = request.form['checker']
+        drive = request.form['driver']
+        lashing = request.form['lashing']
+
+        now = time.localtime()
+        today = "%04d/%02d/%02d" % (now.tm_year, now.tm_mon, now.tm_mday)
+
+        # print(checker, drive, lashing)
+        try :
+            worker_table = db.Table('worker', metadata, autoload=True, autoload_with=engine)
+            query = db.insert(worker_table).values(WORKER_TASK=checker_task, WORKER_DATE=today, WORKER_PERSONNEL=checker)
+            result_proxy = connection.execute(query)
+            result_proxy.close()
+
+            query = db.insert(worker_table).values(WORKER_TASK=drive_task, WORKER_DATE=today,WORKER_PERSONNEL=drive)
+            result_proxy = connection.execute(query)
+            result_proxy.close()
+
+            query = db.insert(worker_table).values(WORKER_TASK=lashing_task, WORKER_DATE=today,WORKER_PERSONNEL=lashing)
+            result_proxy = connection.execute(query)
+            result_proxy.close()
+
+            return flask.redirect(flask.url_for('total'))
+
+        except :
+            return flask.redirect(flask.url_for('worker'))
+
+    else :
+        return flask.redirect(flask.url_for('worker'))
+
+
 #스케쥴 페이지
 @app.route('/table')
 def table():
@@ -361,27 +527,26 @@ def cal3():
 
 @app.route('/schedule', methods=['GET', 'POST'])
 def schedule() :
-    if request.method == 'POST' :
-        print("post")
+    print("in")
+    if request.method == 'POST':
+        schedule_import = request.form['schedule_import']
+        schedule_export = request.form['schedule_export']
         vessel_name = request.form['vessel_name']
-        ton = request.form['ton']
-        import_time = request.form['import']
-        export_time = request.form['export']
-        print(vessel_name, ton, import_time, export_time)
-        if len(vessel_name) == 0 or len(import_time) == 0 or len(export_time) == 0 :
-            print("non type")
+        schedule_ton = request.form['schedule_ton']
+
+        print(type(schedule_ton), type(schedule_export), type(schedule_import), type(vessel_name))
+        if len(schedule_import) == 0 or len(schedule_export) == 0 or len(vessel_name) == 0 :
             return flask.redirect(flask.url_for('cal3'))
         else :
-            try :
-                print("success")
-                # table = db.Table('login', metadata, autoload=True, autoload_with=engine)
-                # query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()))
-                # result_proxy = connection.execute(query)
-                # result_proxy.close()
-                return flask.redirect(flask.url_for('index'))
-            except :
-                print("error")
-                return flask.redirect(flask.url_for('cal3'))
+            print("else")
+            # try :
+            table = db.Table('schedule', metadata, autoload=True, autoload_with=engine)
+            query = db.insert(table).values(SCHEDULE_IMPORT=schedule_import, SCHEDULE_EXPORT=schedule_export, VESSEL_NAME=vessel_name, SCHEDULE_TON=schedule_ton)
+            result_proxy = connection.execute(query)
+            result_proxy.close()
+            return flask.redirect(flask.url_for('cal3'))
+            # except:
+                #     return flask.redirect(flask.url_for('schedule_page'))
     elif request.method == 'GET' :
         print("get")
         return flask.redirect(flask.url_for('cal3'))

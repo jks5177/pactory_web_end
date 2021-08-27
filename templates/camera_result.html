@@ -29,7 +29,7 @@ body {
   <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
           <li class="sidebar-brand"><a href="/">팩토리's</a></li>
-          <li class="sidebar-nav-item"><a href="#about"></a></li>
+          <li class="sidebar-nav-item"><a href="/logout">Log Out</a></li>
           <li class="sidebar-nav-item"><a href="/camera">OCR 작업</a></li>
           <li class="sidebar-nav-item"><a href="/port">선박 접안예측</a></li>
           <li class="sidebar-nav-item"><a href="/total">실시간 정보공유</a></li>
@@ -55,14 +55,15 @@ body {
         </div>
       </div>
     </div>
-
+  <form action="/save", method="post">
   <div class="col">
     <div style="text-align: center">
-        <input type='button' value='이전' onClick="location.href='/del'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
-        <input type="text" placeholder="틀렸으면 VIN을 입력하세요." name="VIN" style="width:190px; height:35px; font-size: 0.9em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;">
-        <input type='button' value='저장' onClick="location.href='/save'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
+            <input type='button' value='이전' onClick="location.href='/del'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
+            <input type="text" placeholder="틀렸으면 VIN을 입력하세요." name="vin" value="{{ text }}" style="width:190px; height:35px; font-size: 0.9em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;">
+            <input type='submit' value='저장' onClick="location.href='/save'" style="width:170px; height:35px; font-size: 1.2em; font-style: Malgun Gothic; font-weight: bold; font-color:#333333;"/>
     </div>
   </div>
+  </form>
 </div>
     <script src="/static/camera/assets/js/scripts.js"></script>
 <!--    <script src="/static/camera_result/assets/js/camera_result.js"></script>-->

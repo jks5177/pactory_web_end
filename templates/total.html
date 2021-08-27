@@ -89,12 +89,10 @@
                             <span class="nav-label">Log out</span><i class="fa fa-angle-left arrow"></i></a>
                         <ul class="nav-2-level collapse">
                             <li>
-                                <a href="/">Log out</a>
+                                <a href="/logout">Log out</a>
                             </li>
                         </ul>
                     </li>
-                    
-
             </div>
         </nav>
         <!-- END SIDEBAR-->
@@ -105,37 +103,104 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-success color-white widget-stat">
                             <div onclick="location.href='/worker'" class="ibox-body">
-
                                 <h2 class="m-b-5 font-strong">오늘 작업자</h2>
                                 <div class="m-b-5"></div><i class="ti-shopping-cart widget-stat-icon"></i>
-                                <div><h1><i class="m-b-5 font-strong">검수원 드라이버 고박팀</i></h1></div>
+                                <table height="105" width="400">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align:center">검수원</th>
+                                        <th style="text-align:center">드라이버</th>
+                                        <th style="text-align:center">고박팀</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">{{checker}}</td>
+                                        <td style="text-align:center">{{driver}}</td>
+                                        <td style="text-align:center">{{lashing}}</td>
+                                    </tr>
+                                    </thead>
+                                </table>
+<!--                                <div><h1><i class="m-b-5 font-strong">검수원 드라이버 고박팀</i></h1></div>-->
+<!--                                <div><h1><i class="m-b-5 font-strong">{{checker}} {{driver}} {{lashing}}</i></h1></div>-->
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-info color-white widget-stat">
-                            <div onclick="location.href='/main'" class="ibox-body">
-                                <h2 class="m-b-5 font-strong">HOLD</h2>
+                            <div class="ibox-body">
+                                <h2 class="m-b-5 font-strong">HOLD - DECK</h2>
                                 <div class="m-b-5"></div><i class="ti-bar-chart widget-stat-icon"></i>
-                                <div><h1><i class="m-b-5 font-strong">111</i></h1></div>
+                                <form action="/hol_dec_send" method="post">
+                                <div style="text-align:center">
+                                    <table width="300" height="105">
+                                        <tr>
+                                            <th style="text-align:center">HOLD</th>
+                                            <th style="text-align:center">DECK</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select name="hold">
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="deck">
+                                                    <option value=1>1</option>
+                                                    <option value=2>2</option>
+                                                    <option value=3>3</option>
+                                                    <option value=4>4</option>
+                                                    <option value=5>5</option>
+                                                    <option value=6>6</option>
+                                                    <option value=7>7</option>
+                                                    <option value=8>8</option>
+                                                    <option value=9>9</option>
+                                                    <option value=10>10</option>
+                                                    <option value=11>11</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button type="submit">save</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-warning color-white widget-stat">
-                            <div onclick="location.href='/main'" class="ibox-body">
-                                <h2 class="m-b-5 font-strong">DECK</h2>
+                            <div class="ibox-body">
+                                <h2 class="m-b-5 font-strong">VESSEL NAME</h2>
                                 <div class="m-b-5"></div><i class="fa fa-money widget-stat-icon"></i>
-                                <div><h1><i class="m-b-5 font-strong">111</i></h1></div>
+                                <form method="post" action="/vessel_send">
+                                <div>
+                                    <h1 style="margin-bottom:35px;">
+                                        <i class="m-b-5 font-strong">
+                                            <select name="vessel">
+                                                {% for i in vessel_name %}
+                                                    <option>{{i}}</option>
+                                                {% endfor %}
+                                            </select>
+<!--                                            <input type="text" name="text" style="background-color:transparent; border:0 solid black; text-align: center; color:#ffffff;">-->
+                                        </i>
+                                    </h1>
+                                    <button type="submit">save</button>
+                                </div>
+                                </form>
+<!--                                <button type="submit">save</button>-->
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-danger color-white widget-stat">
-                            <div onclick="location.href='/main'" class="ibox-body">
+                            <div class="ibox-body">
                                 <h2 class="m-b-5 font-strong">현재 검수량</h2>
-                                <div class="m-b-5">NEW USERS</div><i class="ti-user widget-stat-icon"></i>
-                                <div><h1><i class="m-b-5 font-strong">111</i></h1></div>
+<!--                                <div class="m-b-5">NEW USERS</div><i class="ti-user widget-stat-icon"></i>-->
+                                <div><h1><i class="m-b-5 font-strong">{{total_num}}</i></h1></div>
                             </div>
                         </div>
                     </div>
@@ -158,80 +223,28 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Order ID</th>
-                                            <th>Customer</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th width="91px">Date</th>
+                                            <th>PhoneNum</th>
+                                            <th>차대번호</th>
+                                            <th>차종</th>
+                                            <th>선박명</th>
+                                            <th width="91px">날짜</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {% for (cargo_vin, image_path, vessel_name, cargo_name, cargo_weight, date, ip, phone, deck) in data %}
                                         <tr>
                                             <td>
-                                                <a href="invoice.html">AT2584</a>
+                                                <a href="invoice.html">{{phone}}</a>
                                             </td>
-                                            <td>@Jack</td>
-                                            <td>$564.00</td>
+                                            <td>{{cargo_vin}}</td>
+                                            <td>{{cargo_name}}</td>
                                             <td>
-                                                <span class="badge badge-success">Shipped</span>
+                                                {{vessel_name}}
+<!--                                                <span class="badge badge-success">Shipped</span>-->
                                             </td>
-                                            <td>10/07/2017</td>
+                                            <td>{{date}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="invoice.html">AT2575</a>
-                                            </td>
-                                            <td>@Amalia</td>
-                                            <td>$220.60</td>
-                                            <td>
-                                                <span class="badge badge-success">Shipped</span>
-                                            </td>
-                                            <td>10/07/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="invoice.html">AT1204</a>
-                                            </td>
-                                            <td>@Emma</td>
-                                            <td>$760.00</td>
-                                            <td>
-                                                <span class="badge badge-default">Pending</span>
-                                            </td>
-                                            <td>10/07/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="invoice.html">AT7578</a>
-                                            </td>
-                                            <td>@James</td>
-                                            <td>$87.60</td>
-                                            <td>
-                                                <span class="badge badge-warning">Expired</span>
-                                            </td>
-                                            <td>10/07/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="invoice.html">AT0158</a>
-                                            </td>
-                                            <td>@Ava</td>
-                                            <td>$430.50</td>
-                                            <td>
-                                                <span class="badge badge-default">Pending</span>
-                                            </td>
-                                            <td>10/07/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="invoice.html">AT0127</a>
-                                            </td>
-                                            <td>@Noah</td>
-                                            <td>$64.00</td>
-                                            <td>
-                                                <span class="badge badge-success">Shipped</span>
-                                            </td>
-                                            <td>10/07/2017</td>
-                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -240,91 +253,85 @@
                     
                     <div class="col-lg-4">
                         <div class="ibox">
-                            <div class="wrap">  
-                                
-                            
-                            
-
+<!--                            <div class="wrap">-->
                             <div class="ibox-body">
                                 <div class="row align-items-center">
                                     <div class="col-md-6">
-
-
                                 <div class="countdown">
-                                  <div class="bloc-time hours" data-init-value="24">
+                                  <div class="bloc-time hours" data-init-value={{hour}}>
                                     <span class="count-title">Hours</span>
 
                                     <div class="figure hours hours-1">
-                                      <span class="top">2</span>
+                                      <span class="top">{{hour_1}}</span>
                                       <span class="top-back">
-                                        <span>2</span>
+                                        <span>{{hour_1}}</span>
                                       </span>
-                                      <span class="bottom">2</span>
+                                      <span class="bottom">{{hour_1}}</span>
                                       <span class="bottom-back">
-                                        <span>2</span>
+                                        <span>{{hour_1}}</span>
                                       </span>
                                     </div>
 
                                     <div class="figure hours hours-2">
-                                      <span class="top">4</span>
+                                      <span class="top">{{hour_2}}</span>
                                       <span class="top-back">
-                                        <span>4</span>
+                                        <span>{{hour_2}}</span>
                                       </span>
-                                      <span class="bottom">4</span>
+                                      <span class="bottom">{{hour_2}}</span>
                                       <span class="bottom-back">
-                                        <span>4</span>
+                                        <span>{{hour_2}}</span>
                                       </span>
                                     </div>
                                   </div>
                               
-                                  <div class="bloc-time min" data-init-value="0">
+                                  <div class="bloc-time min" data-init-value={{minute}}>
                                     <span class="count-title">Minutes</span>
                               
                                     <div class="figure min min-1">
-                                      <span class="top">0</span>
+                                      <span class="top">{{minute_1}}</span>
                                       <span class="top-back">
-                                        <span>0</span>
+                                        <span>{{minute_1}}</span>
                                       </span>
-                                      <span class="bottom">0</span>
+                                      <span class="bottom">{{minute_1}}</span>
                                       <span class="bottom-back">
-                                        <span>0</span>
+                                        <span>{{minute_1}}</span>
                                       </span>        
                                     </div>
                               
                                     <div class="figure min min-2">
-                                     <span class="top">0</span>
+                                     <span class="top">{{minute_2}}</span>
                                       <span class="top-back">
-                                        <span>0</span>
+                                        <span>{{minute_2}}</span>
                                       </span>
-                                      <span class="bottom">0</span>
+                                      <span class="bottom">{{minute_2}}</span>
                                       <span class="bottom-back">
-                                        <span>0</span>
+                                        <span>{{minute_2}}</span>
                                       </span>
                                     </div>
                                   </div>
                               
-                                  <div class="bloc-time sec" data-init-value="0">
+                                  <div class="bloc-time sec" data-init-value={{second}}>
                                     <span class="count-title">Seconds</span>
                               
                                       <div class="figure sec sec-1">
-                                      <span class="top">0</span>
+                                      <span class="top">{{second_1}}</span>
                                       <span class="top-back">
-                                        <span>0</span>
+                                        <span>{{second_1}}</span>
                                       </span>
-                                      <span class="bottom">0</span>
+                                      <span class="bottom">{{second_1}}</span>
                                       <span class="bottom-back">
-                                        <span>0</span>
+                                        <span>{{second_1}}</span>
                                       </span>          
                                     </div>
                               
                                     <div class="figure sec sec-2">
-                                      <span class="top">0</span>
+                                      <span class="top">{{second_2}}</span>
                                       <span class="top-back">
-                                        <span>0</span>
+                                        <span>{{second_2}}</span>
                                       </span>
-                                      <span class="bottom">0</span>
+                                      <span class="bottom">{{second_2}}</span>
                                       <span class="bottom-back">
-                                        <span>0</span>
+                                        <span>{{second_2}}</span>
                                       </span>
                                     </div>
                                   </div>
@@ -351,7 +358,7 @@
 <!--                                        <span class="float-right text-danger"><i class="fa fa-caret-down"></i> 4%</span>-->
 <!--                                    </li>-->
 <!--                                    </ul>-->
-                                </div>
+<!--                                </div>-->
                             </div>
                         </div>
                     
@@ -418,163 +425,128 @@
                                 <ul class="list-group list-group-divider list-group-full tasks-list">
                                     <li class="list-group-item task-item">
                                         <div>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/us.png" />USA</td> -->
+                                        {% for i in range(11, 0, -1) %}
+                                            <tr>
                                             <td></td>
-                                            <td><h3>11 Deck</h3>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:17%; height:15px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/us.png" />USA</td> -->
                                             <td></td>
-                                            <td><h3>10 Deck</h3>
+                                            <td><h3>{{i}} Deck</h3>
                                                 <div class="progress">
-                                                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width:92%; height:15px;" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{deck[i-1]}}%; height:15px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                                 <span class="progress-parcent"></span>
                                             </td>
                                         </tr>
-                                        <tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/us.png" />USA</td> -->
-                                            <td></td>
-                                            <td><h3>9 Deck</h3>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:61%; height:15px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/us.png" />USA</td> -->
-                                            <td></td>
-                                            <td><h3>8 Deck</h3>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:15%; height:15px;" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/us.png" />USA</td> -->
-                                            <td></td>
-                                            <td><h3>7 Deck</h3>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:36%; height:15px;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/Canada.png" />Canada</td> -->
-                                            <td><h3>6 Deck</h3>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:48%; height:15px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/India.png" />India</td> -->
-                                            <td><h3>5 Deck</h3></td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:37%; height:15px;" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/Australia.png" />Australia</td> -->
-                                            <td><h3>4 Deck</h3></td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:36%; height:15px;" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/Singapore.png" />Singapore</td> -->
-                                            <td><h3>3 Deck</h3></td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar" role="progressbar" style="width:35%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/uk.png" />UK</td> -->
-                                            <td><h3>2 Deck</h3></td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:35%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- <img src="/static/total/assets/img/glovis.jpg" width="100px;" height="80px;"> -->
-                                            </td>
-                                            <!-- <td>
-                                                <img class="m-r-10" src="/static/total/assets/img/flags/UAE.png" />UAE</td> -->
-                                            <td><h3>1 Deck</h3></td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:30%; height:15px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <span class="progress-parcent"></span>
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>11 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{deck_11_per}}%; height:15px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>10 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width:{{deck_10_per}}; height:15px;" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>9 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_9_per}}%; height:15px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>8 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{deck_8_per}}%; height:15px;" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>7 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{deck_7_per}}%; height:15px;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>6 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{deck_6_per}}%; height:15px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>5 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{deck_5_per}}%; height:15px;" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>4 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_4_per}}%; height:15px;" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>3 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar" role="progressbar" style="width:{{deck_3_per}}%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>2 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_2_per}}%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><h3>1 Deck</h3>-->
+<!--                                                <div class="progress">-->
+<!--                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{deck_1_per}}%; height:15px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                                                </div>-->
+<!--                                                <span class="progress-parcent"></span>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
                                         </div>
 
                                         <!-- <div>

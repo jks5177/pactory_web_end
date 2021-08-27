@@ -2,25 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="588cf27b-749c-4983-a911-22f52d86e581" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/VESSEL_TABLE_INSERT.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loading_DB.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/info/assets/image/sunglass.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/main/assets/img/3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/main/assets/img/5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/main/assets/img/main.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/x" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_ocr_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_ocr_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_port.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_port.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main/assets/img/final_total.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/final_total.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main/assets/img/main3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/assets/img/main3.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/total/assets/css/time.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/total/assets/css/time.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ari.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/complete/KMHS281BBKU114241.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/complete/KMHS281BBKU114241.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/css/schedule.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/schedule.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main/js/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/js/schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/total/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/total/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/camera.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/camera_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera_result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/info.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/schedule.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/total.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/total.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/worker.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/worker.html" afterDir="false" />
     </list>
@@ -32,6 +24,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/templates/index.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/login.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/static/total/assets/css/main.css" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/app.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/schedule.html" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/total.html" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="1xFiLvOghztIwSZfqWO2l83vRgL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -40,7 +48,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pythonProject" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python">
