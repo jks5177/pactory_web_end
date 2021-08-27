@@ -339,6 +339,7 @@
                               </div>
                               <!-- partial -->
                               <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+                              <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script><script  src="/static\total\assets\js\scripts\drafttime.js"></script>
                               <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script><script  src="/static/total/assets/js/scripts/drafttime.js"></script>
                                     </div>
                                      <!-- <div class="col-md-6">
@@ -359,6 +360,7 @@
 <!--                                    </li>-->
 <!--                                    </ul>-->
 <!--                                </div>-->
+                                </div>
                             </div>
                         </div>
                     
@@ -437,188 +439,7 @@
                                             </td>
                                         </tr>
                                         {% endfor %}
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>11 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{deck_11_per}}%; height:15px;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>10 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-primary" role="progressbar" style="width:{{deck_10_per}}; height:15px;" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>9 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_9_per}}%; height:15px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>8 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{deck_8_per}}%; height:15px;" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>7 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:{{deck_7_per}}%; height:15px;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>6 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{deck_6_per}}%; height:15px;" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>5 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:{{deck_5_per}}%; height:15px;" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>4 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_4_per}}%; height:15px;" aria-valuenow="36" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>3 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar" role="progressbar" style="width:{{deck_3_per}}%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>2 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-info" role="progressbar" style="width:{{deck_2_per}}%; height:15px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
-<!--                                        <tr>-->
-<!--                                            <td></td>-->
-<!--                                            <td></td>-->
-<!--                                            <td><h3>1 Deck</h3>-->
-<!--                                                <div class="progress">-->
-<!--                                                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:{{deck_1_per}}%; height:15px;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>-->
-<!--                                                </div>-->
-<!--                                                <span class="progress-parcent"></span>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
                                         </div>
-
-                                        <!-- <div>
-                                            <label class="ui-checkbox ui-checkbox-gray ui-checkbox-success">
-                                                <input type="checkbox">
-                                                <span class="input-span"></span>
-                                                <span class="task-title">Meeting with Eliza</span>
-                                            </label>
-                                        </div>
-                                        <div class="task-data"><small class="text-muted">10 July 2018</small></div>
-                                        <div class="task-actions">
-                                            <a href="javascript:;"><i class="fa fa-edit text-muted m-r-10"></i></a>
-                                            <a href="javascript:;"><i class="fa fa-trash text-muted"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item task-item">
-                                        <div>
-                                            <label class="ui-checkbox ui-checkbox-gray ui-checkbox-success">
-                                                <input type="checkbox" checked="">
-                                                <span class="input-span"></span>
-                                                <span class="task-title">Check your inbox</span>
-                                            </label>
-                                        </div>
-                                        <div class="task-data"><small class="text-muted">22 May 2018</small></div>
-                                        <div class="task-actions">
-                                            <a href="javascript:;"><i class="fa fa-edit text-muted m-r-10"></i></a>
-                                            <a href="javascript:;"><i class="fa fa-trash text-muted"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item task-item">
-                                        <div>
-                                            <label class="ui-checkbox ui-checkbox-gray ui-checkbox-success">
-                                                <input type="checkbox">
-                                                <span class="input-span"></span>
-                                                <span class="task-title">Create Financial Report</span>
-                                            </label>
-                                            <span class="badge badge-danger m-l-5"><i class="ti-alarm-clock"></i> 1 hrs</span>
-                                        </div>
-                                        <div class="task-data"><small class="text-muted">No due date</small></div>
-                                        <div class="task-actions">
-                                            <a href="javascript:;"><i class="fa fa-edit text-muted m-r-10"></i></a>
-                                            <a href="javascript:;"><i class="fa fa-trash text-muted"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item task-item">
-                                        <div>
-                                            <label class="ui-checkbox ui-checkbox-gray ui-checkbox-success">
-                                                <input type="checkbox" checked="">
-                                                <span class="input-span"></span>
-                                                <span class="task-title">Send message to Mick</span>
-                                            </label>
-                                        </div>
-                                        <div class="task-data"><small class="text-muted">04 Apr 2018</small></div>
-                                        <div class="task-actions">
-                                            <a href="javascript:;"><i class="fa fa-edit text-muted m-r-10"></i></a>
-                                            <a href="javascript:;"><i class="fa fa-trash text-muted"></i></a>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item task-item">
-                                        <div>
-                                            <label class="ui-checkbox ui-checkbox-gray ui-checkbox-success">
-                                                <input type="checkbox">
-                                                <span class="input-span"></span>
-                                                <span class="task-title">Create new page</span>
-                                            </label>
-                                            <span class="badge badge-success m-l-5">2 Days</span>
-                                        </div>
-                                        <div class="task-data"><small class="text-muted">07 Dec 2018</small></div>
-                                        <div class="task-actions">
-                                            <a href="javascript:;"><i class="fa fa-edit text-muted m-r-10"></i></a>
-                                            <a href="javascript:;"><i class="fa fa-trash text-muted"></i></a>
-                                        </div> -->
                                     </li>
                                 </ul>
                             </div>
@@ -627,19 +448,18 @@
                             <div class="col-lg-8">
                                 <div class="ibox">
                                     <div class="ibox-body">
+                                        <div class="flexbox mb-4">
                                             <div class="d-inline-flex">
                                                 <div class="px-3" style="border-right: 1px solid rgba(0,0,0,.1);">
                                                     <div class="text-muted">DATE</div>
                                                     <div>
-                                                        <span class="h2 m-0">2021-08-11</span>
-                                                        <!-- <span class="text-success ml-2"><i class="fa fa-level-up"></i> +25%</span> -->
+                                                        <span class="h2 m-0">{{date}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="px-3">
                                                     <div class="text-muted">TIME</div>
                                                     <div>
                                                         <span class="h2 m-0">09:00 - 21:00</span>
-                                                        <!-- <span class="text-warning ml-2"><i class="fa fa-level-down"></i> -12%</span> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -667,15 +487,9 @@
                 </style>
                 
             </div>
-            <!-- END PAGE CONTENT-->
-            <!-- <footer class="page-footer">
-                <div class="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                <a class="px-4" href="http://themeforest.net/item/adminca-responsive-bootstrap-4-3-angular-4-admin-dashboard-template/20912589" target="_blank">BUY PREMIUM</a>
-                <div class="to-top"><i class="fa fa-angle-double-up"></i></div>
-            </footer> -->
+
         </div>
     </div>
-    <!-- BEGIN THEME CONFIG PANEL-->
     <div class="theme-config">
 
             <div class="font-strong">LAYOUT STYLE</div>

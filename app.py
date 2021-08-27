@@ -1,15 +1,7 @@
 import flask
-import sqlalchemy.sql.expression
+# import sqlalchemy.sql.expression
 from flask import Flask, render_template, Response
 from flask import Flask, url_for, render_template, request, redirect, session
-
-#from model import db
-#from model import Fcuser
-#from flask_wtf.csrf import CSRFProtect
-#from form import ResiterForm,LoginForm
-# from mysqlx import connection
-
-# from model.user_model import User
 
 import os
 from importlib import import_module
@@ -22,10 +14,7 @@ import datetime
 import sys
 from flask import Flask, render_template
 
-import socket
-
-import pandas as pd
-
+import sqlalchemy
 import sqlalchemy as db
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -34,8 +23,12 @@ from sqlalchemy.ext.declarative import declarative_base
 import pymysql
 pymysql.install_as_MySQLdb()
 
+import socket
+
+import pandas as pd
+
 # db 연동
-#root:내비번
+# root:내비번
 engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
@@ -67,8 +60,9 @@ ret, frame = cam.read()
 
 import json
 
-with open('static/car_vin.json', 'r+', encoding='utf8') as f :
+with open('static/car_vin.json', 'r+', encoding='utf8') as f:
     json_data = json.load(f)
+
 
 def vin_decoder(car_vin):
     decode_list = []
@@ -86,9 +80,9 @@ def vin_decoder(car_vin):
         # print('차종류 :',json_data['car_num3'][car_vin[3]])
         if type(json_data['car_num3'][car_vin[3]]) == list:
             if car_vin[4] in json_data['car_num4'].keys():
-                try :
+                try:
                     car = set([json_data['car_num4'][car_vin[4]]]).intersection(set(json_data['car_num3'][car_vin[3]]))
-                except :
+                except:
                     car = set(json_data['car_num3'][car_vin[3]]).intersection(list(json_data['car_num4'][car_vin[4]]))
                 decode_list.append(list(car)[0])
                 # print('차량상세:', list(car)[0] )
@@ -112,8 +106,9 @@ def vin_decoder(car_vin):
         # print('제조공장 :',json_data['car_num10'][car_vin[10]])
     return decode_list
 
+
 # 사각형 이미지 detection
-def preprocess(img) :
+def preprocess(img):
     import cv2
     import numpy as np
 
@@ -132,63 +127,65 @@ def preprocess(img) :
 
     dst = img.copy()
 
-    img = cv2.GaussianBlur(dst, (0,0), 5) # 이미지 blur 처리
+    img = cv2.GaussianBlur(dst, (0, 0), 5)  # 이미지 blur 처리
 
-    roi = dst[LU[1]:LD[1], LU[0]:RU[0]] # 관심 영역 설정
+    roi = dst[LU[1]:LD[1], LU[0]:RU[0]]  # 관심 영역 설정
 
-    img[LU[1]:LD[1], LU[0]:RU[0]] = roi # 해당 영역 roi로 변환
+    img[LU[1]:LD[1], LU[0]:RU[0]] = roi  # 해당 영역 roi로 변환
 
-    for i in [[LU, LD], [LU, RU], [RU, RD], [LD, RD]] :
-        length = abs(i[0][0]-i[1][0])+abs(i[0][1]-i[1][1])
+    for i in [[LU, LD], [LU, RU], [RU, RD], [LD, RD]]:
+        length = abs(i[0][0] - i[1][0]) + abs(i[0][1] - i[1][1])
         # cv2.line(img, i[0], i[1], (0,255,0), 3)
-        for j in range(0,100,2) :
-            if i[0][0] == i[1][0] :
+        for j in range(0, 100, 2):
+            if i[0][0] == i[1][0]:
                 # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1]+int(j*0.01*length)),(i[0][0], i[0][1]+int((j+1)*0.01*length)), (42,204,246), 2)
-            elif i[0][1] == i[1][1] :
-                cv2.line(img, (i[0][0]+int(j*0.01*length), i[0][1]),(i[0][0]+int((j+1)*0.01*length), i[0][1]), (42,204,246), 2)
+                cv2.line(img, (i[0][0], i[0][1] + int(j * 0.01 * length)),
+                         (i[0][0], i[0][1] + int((j + 1) * 0.01 * length)), (42, 204, 246), 2)
+            elif i[0][1] == i[1][1]:
+                cv2.line(img, (i[0][0] + int(j * 0.01 * length), i[0][1]),
+                         (i[0][0] + int((j + 1) * 0.01 * length), i[0][1]), (42, 204, 246), 2)
     return img
 
+# 0은 전면, 1은 후면
 
-#0은 전면, 1은 후면
+# cam = cv2.VideoCapture(1)  # 아리
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+2)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW + 1)
 
-# cam = cv2.VideoCapture(cv2.CAP_DSHOW+1)
 
-#사용자 등록 페이지
-@app.route('/register', methods=['GET','POST'])
+# 사용자 등록 페이지
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     return redirect('/')
 
-#로그인 페이지
-# login 페이지 접속(GET) 처리와, "action=/login" 처리(POST)처리 모두 정의
-@app.route('/', methods=['GET', 'POST'])
-def login_page():
 
+# 로그인 페이지
+@app.route('/')
+def login_page():
     return render_template('login.html')
 
-#메인 페이지
+# 메인 페이지
 @app.route('/main')
 def index():
     return render_template('index.html')
 
-#OCR 분석 페이지
+# OCR 분석 페이지
 def gen_frames():  # generate frame by frame from camera
     while True:
         # Capture frame-by-frame
         ret, frame = cam.read()  # read the camera frame
-        
-        if (not ret): # 프레임이 없을 경우
+
+        if (not ret):  # 프레임이 없을 경우
             break
-        else: # 프레임이 있을 경우
-            frame_ = preprocess(frame) # 전처리 진행(가이드 라인 생성)
-            ret, buffer = cv2.imencode('.jpg', frame_) # frame을 jpg 파일로 인코딩 진행
-            frame = buffer.tobytes() # 데이터 전송을 위해 바이트 형으로 변환
+        else:  # 프레임이 있을 경우
+            frame_ = preprocess(frame)  # 전처리 진행(가이드 라인 생성)
+            ret, buffer = cv2.imencode('.jpg', frame_)  # frame을 jpg 파일로 인코딩 진행
+            frame = buffer.tobytes()  # 데이터 전송을 위해 바이트 형으로 변환
             yield (b'--frame`\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n') # html 해당 위치로 frmae 전송
-                   # concat frame one by one and show result
-            
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # html 해당 위치로 frmae 전송
+            # concat frame one by one and show result
+
+
 @app.route('/camera')
 def camera():
     return render_template('camera.html')
@@ -197,11 +194,12 @@ def camera():
 def camera_result():
     return render_template('camera_result.html')
 
+
 @app.route('/picture')
-def taking_picture(): # 사진을 저장하는 페이지
+def taking_picture():  # 사진을 저장하는 페이지
     ret, frame = cam.read()  # read the camera frame
 
-    d = pytesseract.image_to_data(frame, output_type=Output.DICT) # pytesseract로 ORC 검사
+    d = pytesseract.image_to_data(frame, output_type=Output.DICT)  # pytesseract로 ORC 검사
 
     print(d['text'])
     for i in range(len(d['text'])):
@@ -210,13 +208,15 @@ def taking_picture(): # 사진을 저장하는 페이지
         if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 11:
             # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
             (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
-            frame = cv2.rectangle(frame, (x-5, y-3), (x + w+10, y + h+6), (0, 255, 0), 2) # 해당 위치에 bounding box 생성
+            frame = cv2.rectangle(frame, (x - 5, y - 3), (x + w + 10, y + h + 6), (0, 255, 0),
+                                  2)  # 해당 위치에 bounding box 생성
             # text = d['text'][i]
 
             # 파일 이름 생성
             now = time.localtime()
-            s = '%04d-%02d-%02d-%02d-%02d-%02d' % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
-            file_path = 'image/check_'+s+'.jpg'
+            s = '%04d-%02d-%02d-%02d-%02d-%02d' % (
+            now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+            file_path = 'image/check_' + s + '.jpg'
 
             directory = 'static/image'
 
@@ -224,28 +224,29 @@ def taking_picture(): # 사진을 저장하는 페이지
                 os.makedirs(directory)
 
             # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
-            cv2.imwrite('static/'+file_path, frame)
+            cv2.imwrite('static/' + file_path, frame)
             cv2.imwrite('static/image/check.jpg', frame)
 
             time.sleep(1)
 
             return render_template('camera_result.html', image_file=file_path, text=text)
-            # return flask.redirect(flask.url_for('camera_result', image_file='image/check.jpg', text=text))
 
     return flask.redirect(flask.url_for('camera'))
 
+
 @app.route('/del')
-def del_img(): # 이미지 삭제
+def del_img():  # 이미지 삭제
     import os
     path_dir = 'static/image'
     file_list = os.listdir(path_dir)
-    for filename in file_list :
+    for filename in file_list:
         file_path = path_dir + '/' + filename
         os.remove(file_path)
     return flask.redirect(flask.url_for('camera'))
 
+
 @app.route('/save', methods=['GET', 'POST'])
-def save_img(): # 이미지 저장
+def save_img():  # 이미지 저장
     import os
     img = cv2.imread('static/image/check.jpg')
 
@@ -334,20 +335,14 @@ def save_img(): # 이미지 저장
 
 
 @app.route('/video_feed')
-def video_feed(): # 프레임을 실시간으로 전송해주는 페이지
+def video_feed():  # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/logout')
-def logout() :
-    ip = socket.gethostbyname(socket.gethostname())
-
-    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
-
-    db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).delete()
-    db_session.commit()
-
-    return flask.redirect(flask.url_for('login_page'))
+# 프론트 스케쥴 페이지
+@app.route('/schedule')
+def schedule_page():
+    return render_template('schedule.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -381,6 +376,17 @@ def login():
         # print("get")
         return flask.redirect(flask.url_for('login_page'))
 
+@app.route('/logout')
+def logout() :
+    ip = socket.gethostbyname(socket.gethostname())
+
+    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
+
+    db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).delete()
+    db_session.commit()
+
+    return flask.redirect(flask.url_for('login_page'))
+
 #실시간 정보공유 페이지
 @app.route('/total')
 def total():
@@ -412,7 +418,7 @@ def total():
     total_num = len(db_session.query(cargo_table).filter(text("IP=:ip")).params(ip=ip).all())
 
     schedule_table = sqlalchemy.Table('schedule', metadata, autoload=True, autoload_with=engine)
-    print(deck)
+    # print(deck)
     try :
         import_time = []
         export_time = []
@@ -427,11 +433,12 @@ def total():
 
         hour, minute, second = str(limit_time).split(':')
 
-        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num)
+        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num,date=datetime.date.today())
+    
     except :
-        print("except")
+        # print("except")
         hour, minute, second = 0, 0, 0
-        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num)
+        return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num, date=datetime.date.today())
 
 @app.route('/hol_dec_send', methods=['GET','POST'])
 def hol_dec_send() :
@@ -512,14 +519,16 @@ def worker_send() :
         return flask.redirect(flask.url_for('worker'))
 
 
-#스케쥴 페이지
+# 스케쥴 페이지
 @app.route('/table')
 def table():
     return render_template('table.html')
 
+
 @app.route('/info')
 def info():
     return render_template('info.html')
+
 
 @app.route('/cal')
 def cal3():
@@ -555,5 +564,6 @@ def schedule() :
 def worker():
     return render_template('worker.html')
 
+
 if __name__ == '__main__':
-    app.run('localhost', 4997)
+    app.run('localhost', 4997, debug=True)

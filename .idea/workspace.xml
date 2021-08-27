@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="588cf27b-749c-4983-a911-22f52d86e581" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/static/complete/KMHS281BBKU114241.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/complete/KMHS281BBKU114241.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/main/css/schedule.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/schedule.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/main/js/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/js/schedule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/total/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/total/assets/css/main.css" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/static/main/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main/css/styles.css" afterDir="false" />
+>>>>>>> 0a9ca357366eea0a4e8068da4298643308746867
       <change beforePath="$PROJECT_DIR$/templates/camera.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/camera_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/camera_result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/schedule.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/total.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/total.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/worker.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/worker.html" afterDir="false" />
+=======
+>>>>>>> 0a9ca357366eea0a4e8068da4298643308746867
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +58,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../pythonProject" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app.py" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="advanced.settings" />
+>>>>>>> 0a9ca357366eea0a4e8068da4298643308746867
   </component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python">
@@ -58,7 +74,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="E:\Program Files\python\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\ktaehyun\Anaconda3\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

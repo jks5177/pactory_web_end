@@ -11446,7 +11446,7 @@ footer.footer .social-link:hover {
   height: auto;
   padding-top: 10rem;
   padding-bottom: 20rem;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%), url("../assets/img/main3.jpg");
+  background: url("../assets/img/main1.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -11475,9 +11475,3 @@ footer.footer .social-link:hover {
   font-size: 2.25rem;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 1e1794017c033eac53ceb56898892e3d55c94edd

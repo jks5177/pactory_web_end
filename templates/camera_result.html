@@ -43,10 +43,10 @@ body {
     <div class="row-cols-auto">
       <div class="col">
         <div style="text-align: center">
-          <h3 class="mt-5" style="color:#333333; font-size: 1em;">결과 사진입니다.</h3>
+          <h3 class="mt-5" style="color:#333333; font-size: 1.5em;">결과 사진입니다.</h3>
         </div>
         <div style="text-align: center">
-          <img src="{{ url_for('static', filename=image_file) }}" width="540px" height="540px">
+          <img src="{{ url_for('static', filename=image_file) }}" width="810px" height="810px">
         </div>
         <div style="text-align: center">
           <form action="save" method="GET">
@@ -66,6 +66,5 @@ body {
   </form>
 </div>
     <script src="/static/camera/assets/js/scripts.js"></script>
-<!--    <script src="/static/camera_result/assets/js/camera_result.js"></script>-->
 </body>
 </html>
