@@ -136,15 +136,15 @@ $(document).ready(function() {
     timeFormat: 'h:mm A()',
     selectable: true,
     events: function(start, end, timezone, callback) {
-			let arr = parselocalstorage('events')  
+			let arr = parselocalstorage('events')
       callback(arr);
     },
     eventColor: '#dec5c9',
     eventClick: function (calEvent, jsEvent) {
-      
+
       renderPopup(jsEvent, calEvent.start, calEvent.end, calEvent);
 
-      
+
     },
     eventRender: function(event, element) {
             element.append( `<span class='I_delete'><i class="fa fa-remove fa-2x"></i></span>` );
@@ -156,8 +156,8 @@ $(document).ready(function() {
             var index=events.map(function(x){ return x.id; }).indexOf(event.id);
             events.splice(index,1);
             localStorage.setItem('events', JSON.stringify(events));
-           
-            events=parselocalstorage('events')   
+
+            events=parselocalstorage('events')
 
        }
             });
@@ -170,8 +170,8 @@ $(document).ready(function() {
           $('input#eventstart').val(event.start._i)
            $('input#eventend').val(event.end._i)
           $('#simplemodal').show();
-         
-          
+
+
           //update events
           var that=event;
            $('#edit-form').on('submit', function(e) {
@@ -187,24 +187,24 @@ $(document).ready(function() {
              that.title=$title.val();
               that.location=$location.val();
              that.details=$details.val();
-                that.start=$start.val();               
+                that.start=$start.val();
                that.end=$end.val();
-            
+
             $('#calendar').fullCalendar('updateEvent', that);
              console.log('after update',events)
               $('#simplemodal').hide();
               $('#calendar-popup').hide();
            });
            $('#calendar').fullCalendar('updateEvent', event);
-         
-         // 
+
+         //
            // 		localStorage.setItem('events', JSON.stringify(events));
             });
-      
+
       $('#close-btnid').click(function(){
                   $('#simplemodal').hide();
       })
-    
+
       var modal=document.getElementById('simplemodal')
 
      window.addEventListener('click',clickOutside)
@@ -220,9 +220,9 @@ $(document).ready(function() {
         $('.btn-primary').css('opacity',1)
           $('.btn-primary').click(function(){
         renderPopup(jsEvent, start.local(), end.local());
-      }) 
+      })
       renderPopup(jsEvent, start.local(), end.local());
-    
+
     }
   });
 
@@ -254,7 +254,7 @@ $(document).ready(function() {
 
   });
 
-  
+
 
   //Set hide action for ESC key event
   $('#calendar-popup').on('keydown', function(e) {
@@ -317,9 +317,9 @@ if(events.length===0){
     var mS1 = {"01":'Jan', "02":'Feb', "03":'Mar', "04":'Apr', "05":'May', "06":'June', "07":'July', "08":'Aug', "09":'Sept', "10":'Oct', "11":'Nov', "12":'Dec'};
 
             $('.dialog').append('<div><span class="s_title">' + events[i].title +`</span><br><span class='s_des'>"` +events[i].details+
-                                  
+
                                  `</span> <span class='duration'>`+events[i].start+`</span>`
-                                    
+
                                 + `</div>
    <ul class="vertical-date">
             <li class="list-daynumber">`+events[i].start.slice(8,10)+`</li>
@@ -356,7 +356,7 @@ if(events.length===0){
         clearDialog();
         for (var i = 0; i < events.length; i++) {
             if ((events[i].title).toLowerCase().startsWith(str)) {
-              
+
     var mS2 = {"01":'Jan', "02":'Feb', "03":'Mar', "04":'Apr', "05":'May', "06":'June', "07":'July', "08":'Aug', "09":'Sept', "10":'Oct', "11":'Nov', "12":'Dec'};
 
                 $('.dialog').append('<div><span class="s_title">' + events[i].title+`</span><br><span class='s_des'>` +events[i].details
@@ -369,7 +369,7 @@ if(events.length===0){
             <li class="list-monthname">`+mS2[events[i].start.slice(5,7)]+`</li>
           </ul>
 `);
-        
+
             }
         }
     }

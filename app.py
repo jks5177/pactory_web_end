@@ -150,7 +150,7 @@ def preprocess(img):
 
 # cam = cv2.VideoCapture(1)  # 아리
 
-cam = cv2.VideoCapture(cv2.CAP_DSHOW + 1)
+cam = cv2.VideoCapture(cv2.CAP_DSHOW + 2)
 
 
 # 사용자 등록 페이지
@@ -277,8 +277,14 @@ def save_img():  # 이미지 저장
 
         phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
 
+        deck = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][5]
+
+        hold = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][4]
+
+        print(hold)
+
         table = db.Table('storage', metadata, autoload=True, autoload_with=engine)
-        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path,CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum)
+        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path,VESSEL_NAME="ALTAIR LEADER",CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum,DECK=deck,HOLD=hold)
         result_proxy = connection.execute(query)
         result_proxy.close()
 
@@ -298,8 +304,7 @@ def save_img():  # 이미지 저장
         print(car_name)
 
         car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
-        cargo_weight = \
-        db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
+        cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
 
         now = time.localtime()
         now_time = "%04d/%02d/%02d %02d:%02d:%02d" % (
@@ -309,10 +314,12 @@ def save_img():  # 이미지 저장
 
         deck = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][5]
 
+        hold = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][4]
+
         table = db.Table('cargo', metadata, autoload=True, autoload_with=engine)
         query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path, VESSEL_NAME="GLOVIS SIRIUS",
                                         CARGO_NAME=car_name, CARGO_WEIGHT=cargo_weight, CARGO_INSPECT_TIME=now_time,
-                                        IP=ip, LI_PHONENUM=phoneNum, DECK=deck)
+                                        IP=ip, LI_PHONENUM=phoneNum, DECK=deck, HOLD=hold)
         result_proxy = connection.execute(query)
         result_proxy.close()
 
@@ -339,10 +346,10 @@ def video_feed():  # 프레임을 실시간으로 전송해주는 페이지
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# 프론트 스케쥴 페이지
-@app.route('/schedule')
-def schedule_page():
-    return render_template('schedule.html')
+# # 프론트 스케쥴 페이지
+# @app.route('/schedule')
+# def schedule_page():
+#     return render_template('schedule.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -429,14 +436,17 @@ def total():
             export_time.append(i[1])
             vessel_name.append(i[2])
 
+        # print(schedule_list)
+
         limit_time = export_time[0] - date.now()
+        print(limit_time)
 
         hour, minute, second = str(limit_time).split(':')
-
+        print(hour, minute, second)
         return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num,date=datetime.date.today())
     
     except :
-        # print("except")
+        print("except")
         hour, minute, second = 0, 0, 0
         return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num, date=datetime.date.today())
 
@@ -518,17 +528,14 @@ def worker_send() :
     else :
         return flask.redirect(flask.url_for('worker'))
 
-
 # 스케쥴 페이지
 @app.route('/table')
 def table():
     return render_template('table.html')
 
-
 @app.route('/info')
 def info():
     return render_template('info.html')
-
 
 @app.route('/cal')
 def cal3():
@@ -554,8 +561,6 @@ def schedule() :
             result_proxy = connection.execute(query)
             result_proxy.close()
             return flask.redirect(flask.url_for('cal3'))
-            # except:
-                #     return flask.redirect(flask.url_for('schedule_page'))
     elif request.method == 'GET' :
         print("get")
         return flask.redirect(flask.url_for('cal3'))
@@ -563,6 +568,26 @@ def schedule() :
 @app.route('/worker')
 def worker():
     return render_template('worker.html')
+
+@app.route('/deck')
+def deck() :
+    car_sql = 'select * from car'
+    car_df = pd.read_sql(car_sql, con=connection)
+    car_name = list(car_df['CAR_NAME'])
+    print(car_name)
+    # car_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    cargo_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    # car_count_dic = {}
+    car = [[0 for col in range(4)] for row in range(11)]
+    for i in range(11) :
+        for j in range(4) :
+            for k in car_name :
+                car_count = len(db_session.query(cargo_table).filter(text("DECK=:deck_num")).params(deck_num=i).filter(text("HOLD=:hold_num")).params(hold_num=j).filter(text("CARGO_NAME=:car_name")).params(car_name=k).all())
+                if car_count > 0 :
+                    car[i][j] = {k:car_count}
+
+    # print(car_count_dic)
+    return render_template('deck.html', car=car)
 
 
 if __name__ == '__main__':

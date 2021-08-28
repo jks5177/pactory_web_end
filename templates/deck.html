@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GLOVIS_PRIME</title>
+    <style>
+        .jb-wrap {
+	        width: 100%;
+	        margin: 10px auto;
+	        border: 1px solid #000000;
+	        position: relative;
+        }
+        .jb-wrap img {
+	        width: 100%;
+	        vertical-align: middle;
+        }
+        .jb-text {
+	        padding: 5px 10px;
+<!--	        background-color: yellow;-->
+	        text-align: center;
+	        position: absolute;
+	        top: 50%;
+	        left: 50%;
+	        transform: translate( -50%, -50% );
+        }
+    </style>
+</head>
+<body>
+    <table border="1" width="1000" height="500">
+        <thead>
+        <tr>
+            <th>No.4</th>
+            <th>No.3</th>
+            <th>No.2</th>
+            <th>No.1</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for i in range(11, 0, -1)%}
+                <tr>
+                {%for j in range(4, -1, -1)%}
+                    {% if j ==0 %}
+                        <td style="text-align:center; vertical-align:middle">{{i}}</td>
+                    {% else %}
+                        <td style="text-align:center; vertical-align:middle">{{car[i-1][j-1]}}</td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <td>11-4</td>-->
+<!--            <td>11-3</td>-->
+<!--            <td>11-2</td>-->
+<!--            <td>11-1</td>-->
+<!--            <td>11</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>10-4</td>-->
+<!--            <td>10-3</td>-->
+<!--            <td>10-2</td>-->
+<!--            <td>10-1</td>-->
+<!--            <td>10</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>9-4</td>-->
+<!--            <td>9-3</td>-->
+<!--            <td>9-2</td>-->
+<!--            <td>9-1</td>-->
+<!--            <td>9</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>8-4</td>-->
+<!--            <td>8-3</td>-->
+<!--            <td>8-2</td>-->
+<!--            <td>8-1</td>-->
+<!--            <td>8</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>7-4</td>-->
+<!--            <td>7-3</td>-->
+<!--            <td>7-2</td>-->
+<!--            <td>7-1</td>-->
+<!--            <td>7</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>6-4</td>-->
+<!--            <td>6-3</td>-->
+<!--            <td>6-2</td>-->
+<!--            <td>6-1</td>-->
+<!--            <td>6</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>5-4</td>-->
+<!--            <td>5-3</td>-->
+<!--            <td>5-2</td>-->
+<!--            <td>5-1</td>-->
+<!--            <td>5</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td>4-3</td>-->
+<!--            <td>4-2</td>-->
+<!--            <td>4-1</td>-->
+<!--            <td>4</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td>3-3</td>-->
+<!--            <td>3-2</td>-->
+<!--            <td>3-1</td>-->
+<!--            <td>3</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td>2-3</td>-->
+<!--            <td>2-2</td>-->
+<!--            <td>2-1</td>-->
+<!--            <td>2</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td>1-3</td>-->
+<!--            <td>1-2</td>-->
+<!--            <td></td>-->
+<!--            <td>1</td>-->
+<!--        </tr>-->
+
+<!--        </tbody>-->
+
+    </table>
+    <input type="button" onClick="location.href='/total'" value="total">
+</body>
+</html>

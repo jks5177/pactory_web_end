@@ -6,7 +6,7 @@
  position: absolute;
     right: 181px;
     top: 35px;
-  opacity:0;
+  opacity:1;
 }
 
 .fc-left h2{
@@ -131,7 +131,7 @@
     font-size: 20px;
     background: #eee;
 }
-   
+
 #calendar-popup * {
   display: block;
 }
@@ -308,12 +308,12 @@ animation-name:modalopen;
 }
 .modal-footer h3{
   margin:0;
-  
+
 }
 @keyframes modalopen{
   from{opacity:0}
   to{opacity:1}
-  
+
 }
 #search_result{
       position: absolute;
@@ -328,8 +328,8 @@ animation-name:modalopen;
 .autocomplete {
   background: #fff;
   position: relative;
-  
- 
+
+
 }
 .autocomplete .close {
   position: absolute;

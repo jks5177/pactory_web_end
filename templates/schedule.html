@@ -5,7 +5,7 @@
   <title>CodePen - Event calendar </title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css'>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'><link rel="stylesheet" href="/static/main/css/schedule.css?e">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'><link rel="stylesheet" href="/static/main/css/schedule_.css?q">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
 </head>
@@ -26,7 +26,7 @@
 
 <div id='calendar'></div>
 
-<div id="calendar-popup">
+<div id="calendar-popup" >
 
   <form id="event-form">
      <div class='calander_popip_title'><i class="fa fa-calendar" aria-hidden="true"></i>
@@ -98,7 +98,8 @@ Details:</p>
   </div>
 </div>
 
-<form method="POST" action="/schedule_">
+
+<form method="POST" action="/schedule">
 <div class='modle' id='simplemodal'>
   <div class='modle-continer'>
       <form id="edit-form">
@@ -116,11 +117,12 @@ Details:</p>
 
      <label for="event-start">입항</label>
        <input id="eventstart" type="datetime-local" name="schedule_import" class='form-control'/>
+
      <label for="event-end">출항</label>
         <input id="eventend" type="datetime-local" name="schedule_export" class='form-control'/>
+
       <label for="event-details">Details</label>
      <textarea id="eventdetails" type='text' name="detail"  class='form-control'></textarea>
-
     </div>
     <div class='modal-footer'>
       <button type='submit' class='btn btn-info' onClick="location.href='/schedule'">save</button>
@@ -131,14 +133,15 @@ Details:</p>
 
 </div>
 </form>
+
 <div id='search_result'>result</div>
 <button type="button" class='btn btn-primary' onClick="location.href='/main'">main</button>
-<!-- partial -->
+
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script><script  src="/static/main/js/schedule.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script><script  src="/static/main/js/schedule_.js"></script>
 
 </body>
 </html>
