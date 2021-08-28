@@ -33,7 +33,7 @@ import pandas as pd
 
 # db 연동
 # root:내비번
-engine = create_engine("mysql://root:root@3.17.70.200:3306/loading_DB")
+engine = create_engine("mysql://new:new@3.17.70.200:3306/loading_DB")
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
