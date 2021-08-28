@@ -163,10 +163,10 @@ def save_img():  # 이미지 저장
     if request.method == 'POST' :
         # print("post")
         cargo_vin = request.form['vin']
-        print(cargo_vin)
+        # print(cargo_vin)
 
-    file_path = 'static/complete/' + str(cargo_vin) + '.jpg'
-    cv2.imwrite(file_path, img)
+    # file_path = 'static/complete/' + str(cargo_vin) + '.jpg'
+    # cv2.imwrite(file_path, img)
 
     ip = socket.gethostbyname(socket.gethostname())
     login_table = sqlalchemy.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
@@ -179,22 +179,13 @@ def save_img():  # 이미지 저장
         car_name = decode_list[4]
         print(car_name)
 
-        car_table = sqlalchemy.Table('CAR', metadata, autoload=True, autoload_with=engine)
-        cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
-
         now = time.localtime()
         now_time = "%04d/%02d/%02d %02d:%02d:%02d" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
 
         phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
 
-        deck = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][5]
-
-        hold = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][4]
-
-        print(hold)
-
         table = db.Table('STORAGE', metadata, autoload=True, autoload_with=engine)
-        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path,VESSEL_NAME="ALTAIR LEADER",CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum,DECK=deck,HOLD=hold)
+        query = db.insert(table).values(CARGO_VIN=cargo_vin,CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum)
         result_proxy = connection.execute(query)
         result_proxy.close()
 
@@ -208,6 +199,14 @@ def save_img():  # 이미지 저장
         return flask.redirect(flask.url_for('camera'))
 
     else :
+        im = Image.fromarray(img)
+        im.save(buffer, format='jpeg')
+        img_str = base64.b64encode(buffer.getvalue())
+
+        img_df = pd.DataFrame({'IMAGE_NAME': cargo_vin, 'IMAGE': [img_str]})
+
+        img_df.to_sql('IMAGE', con=engine, if_exists='append', index=False)
+
         # db 저장
         decode_list = vin_decoder(cargo_vin)
         car_name = decode_list[4]
@@ -221,13 +220,12 @@ def save_img():  # 이미지 저장
         now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
 
         phoneNum = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][0]
-
         deck = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][5]
-
         hold = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][4]
+        vessel_name = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][6]
 
         table = db.Table('CARGO', metadata, autoload=True, autoload_with=engine)
-        query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path, VESSEL_NAME="GLOVIS SIRIUS",
+        query = db.insert(table).values(CARGO_VIN=cargo_vin, VESSEL_NAME=vessel_name,
                                         CARGO_NAME=car_name, CARGO_WEIGHT=cargo_weight, CARGO_INSPECT_TIME=now_time,
                                         IP=ip, LI_PHONENUM=phoneNum, DECK=deck, HOLD=hold)
         result_proxy = connection.execute(query)
