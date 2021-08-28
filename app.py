@@ -23,13 +23,17 @@ from sqlalchemy.ext.declarative import declarative_base
 import pymysql
 pymysql.install_as_MySQLdb()
 
+from PIL import Image
+import base64
+from io import BytesIO
+
 import socket
 
 import pandas as pd
 
 # db 연동
 # root:내비번
-engine = create_engine("mysql://root:root@127.0.0.1:3306/loading_db")
+engine = create_engine("mysql://root:root@3.17.70.200:3306/loading_DB")
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
@@ -43,20 +47,6 @@ metadata = Base.metadata
 metadata.create_all(engine)
 
 app = Flask(__name__)
-
-'''
-import cv2
-
-# 일반적으로 웹캠 불러오기
-cam = cv2.VideoCapture(0)
-ret, frame = cam.read()
-
-# 기존 방식으로 연결이 안될 경우
-# 여기서 숫자 0은 웹캠의 채널 인덱스
-
-cam = cv2.VideoCapture(cv2.CAP_DSHOW+0)
-ret, frame = cam.read()
-'''
 
 import json
 
@@ -106,59 +96,6 @@ def vin_decoder(car_vin):
         # print('제조공장 :',json_data['car_num10'][car_vin[10]])
     return decode_list
 
-
-# 사각형 이미지 detection
-def preprocess(img):
-    import cv2
-    import numpy as np
-
-    r = 800.0 / img.shape[0]
-    dim = (int(img.shape[1] * r), 800)
-    img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
-
-    h, w, c = img.shape
-
-    LU = (int(w * 0.2), int(h * 0.1))
-    LD = (int(w * 0.2), int(h * 0.9))
-    RU = (int(w * 0.8), int(h * 0.1))
-    RD = (int(w * 0.8), int(h * 0.9))
-
-    # print(LU, LD, RU, RD)
-
-    dst = img.copy()
-
-    img = cv2.GaussianBlur(dst, (0, 0), 5)  # 이미지 blur 처리
-
-    roi = dst[LU[1]:LD[1], LU[0]:RU[0]]  # 관심 영역 설정
-
-    img[LU[1]:LD[1], LU[0]:RU[0]] = roi  # 해당 영역 roi로 변환
-
-    for i in [[LU, LD], [LU, RU], [RU, RD], [LD, RD]]:
-        length = abs(i[0][0] - i[1][0]) + abs(i[0][1] - i[1][1])
-        # cv2.line(img, i[0], i[1], (0,255,0), 3)
-        for j in range(0, 100, 2):
-            if i[0][0] == i[1][0]:
-                # print((i[0][0]+j*int(0.1*length), i[0][1]),(i[1][0]+int(j*0.1*length), i[1][1]))
-                cv2.line(img, (i[0][0], i[0][1] + int(j * 0.01 * length)),
-                         (i[0][0], i[0][1] + int((j + 1) * 0.01 * length)), (42, 204, 246), 2)
-            elif i[0][1] == i[1][1]:
-                cv2.line(img, (i[0][0] + int(j * 0.01 * length), i[0][1]),
-                         (i[0][0] + int((j + 1) * 0.01 * length), i[0][1]), (42, 204, 246), 2)
-    return img
-
-# 0은 전면, 1은 후면
-
-# cam = cv2.VideoCapture(1)  # 아리
-
-cam = cv2.VideoCapture(cv2.CAP_DSHOW + 2)
-
-
-# 사용자 등록 페이지
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    return redirect('/')
-
-
 # 로그인 페이지
 @app.route('/')
 def login_page():
@@ -169,70 +106,43 @@ def login_page():
 def index():
     return render_template('index.html')
 
-# OCR 분석 페이지
-def gen_frames():  # generate frame by frame from camera
-    while True:
-        # Capture frame-by-frame
-        ret, frame = cam.read()  # read the camera frame
-
-        if (not ret):  # 프레임이 없을 경우
-            break
-        else:  # 프레임이 있을 경우
-            frame_ = preprocess(frame)  # 전처리 진행(가이드 라인 생성)
-            ret, buffer = cv2.imencode('.jpg', frame_)  # frame을 jpg 파일로 인코딩 진행
-            frame = buffer.tobytes()  # 데이터 전송을 위해 바이트 형으로 변환
-            yield (b'--frame`\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # html 해당 위치로 frmae 전송
-            # concat frame one by one and show result
-
-
 @app.route('/camera')
 def camera():
-    return render_template('camera.html')
+    return redirect('http://localhost:4997/camera')
 
 @app.route('/camera_result')
 def camera_result():
     return render_template('camera_result.html')
 
+@app.route('/image_send')
+def image_send() :
+    image_df = pd.read_sql(sql='select * from IMAGE', con=engine)
+    img_str = image_df['IMAGE'].values[0]
 
-@app.route('/picture')
-def taking_picture():  # 사진을 저장하는 페이지
-    ret, frame = cam.read()  # read the camera frame
+    img = base64.decodestring(img_str)
 
-    d = pytesseract.image_to_data(frame, output_type=Output.DICT)  # pytesseract로 ORC 검사
+    im = Image.open(BytesIO(img))
 
-    print(d['text'])
-    for i in range(len(d['text'])):
-        # print(i)
-        text = d['text'][i].strip()
-        if (d['text'][i].startswith('KM') or d['text'][i].startswith('KN')) and len(d['text'][i]) > 11:
-            # text가 KM 또는 KN으로 시작하고 text의 길이가 15 이상인 것만 추출
-            (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
-            frame = cv2.rectangle(frame, (x - 5, y - 3), (x + w + 10, y + h + 6), (0, 255, 0),
-                                  2)  # 해당 위치에 bounding box 생성
-            # text = d['text'][i]
+    now = time.localtime()
+    s = '%04d-%02d-%02d-%02d-%02d-%02d' % (
+        now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+    file_path = 'image/check_' + s + '.jpg'
 
-            # 파일 이름 생성
-            now = time.localtime()
-            s = '%04d-%02d-%02d-%02d-%02d-%02d' % (
-            now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
-            file_path = 'image/check_' + s + '.jpg'
+    directory = 'static/image'
 
-            directory = 'static/image'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
-            if not os.path.exists(directory):
-                os.makedirs(directory)
+    # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
+    cv2.imwrite('static/' + file_path, frame)
+    cv2.imwrite('static/image/check.jpg', frame)
 
-            # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
-            cv2.imwrite('static/' + file_path, frame)
-            cv2.imwrite('static/image/check.jpg', frame)
+    time.sleep(1)
 
-            time.sleep(1)
+    temp_table = sqlalchemy.Table('TEMP', metadata, autoload=True, autoload_with=engine)
+    db_session.query(temp_table).all().delete()
 
-            return render_template('camera_result.html', image_file=file_path, text=text)
-
-    return flask.redirect(flask.url_for('camera'))
-
+    return render_template('camera_result.html', image_file=file_path, text=text)
 
 @app.route('/del')
 def del_img():  # 이미지 삭제
@@ -259,7 +169,7 @@ def save_img():  # 이미지 저장
     cv2.imwrite(file_path, img)
 
     ip = socket.gethostbyname(socket.gethostname())
-    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
+    login_table = sqlalchemy.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
     f_s = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][-1]
 
     # try:
@@ -269,7 +179,7 @@ def save_img():  # 이미지 저장
         car_name = decode_list[4]
         print(car_name)
 
-        car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
+        car_table = sqlalchemy.Table('CAR', metadata, autoload=True, autoload_with=engine)
         cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
 
         now = time.localtime()
@@ -283,7 +193,7 @@ def save_img():  # 이미지 저장
 
         print(hold)
 
-        table = db.Table('storage', metadata, autoload=True, autoload_with=engine)
+        table = db.Table('STORAGE', metadata, autoload=True, autoload_with=engine)
         query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path,VESSEL_NAME="ALTAIR LEADER",CARGO_NAME=car_name,INSPECT_TIME=now_time,IP=ip,LI_PHONENUM=phoneNum,DECK=deck,HOLD=hold)
         result_proxy = connection.execute(query)
         result_proxy.close()
@@ -303,7 +213,7 @@ def save_img():  # 이미지 저장
         car_name = decode_list[4]
         print(car_name)
 
-        car_table = sqlalchemy.Table('car', metadata, autoload=True, autoload_with=engine)
+        car_table = sqlalchemy.Table('CAR', metadata, autoload=True, autoload_with=engine)
         cargo_weight = db_session.query(car_table).filter(text("CAR_NAME=:car_name")).params(car_name=car_name).all()[0][1]
 
         now = time.localtime()
@@ -316,14 +226,14 @@ def save_img():  # 이미지 저장
 
         hold = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][4]
 
-        table = db.Table('cargo', metadata, autoload=True, autoload_with=engine)
+        table = db.Table('CARGO', metadata, autoload=True, autoload_with=engine)
         query = db.insert(table).values(CARGO_VIN=cargo_vin, IMAGE_PATH=file_path, VESSEL_NAME="GLOVIS SIRIUS",
                                         CARGO_NAME=car_name, CARGO_WEIGHT=cargo_weight, CARGO_INSPECT_TIME=now_time,
                                         IP=ip, LI_PHONENUM=phoneNum, DECK=deck, HOLD=hold)
         result_proxy = connection.execute(query)
         result_proxy.close()
 
-        storage_table = sqlalchemy.Table('storage', metadata, autoload=True, autoload_with=engine)
+        storage_table = sqlalchemy.Table('STORAGE', metadata, autoload=True, autoload_with=engine)
 
         db_session.query(storage_table).filter(text("CARGO_VIN=:cargo_vin")).params(cargo_vin=cargo_vin).delete()
         db_session.commit()
@@ -337,20 +247,6 @@ def save_img():  # 이미지 저장
 
         return flask.redirect(flask.url_for('camera'))
 
-    # except:
-    #     return flask.redirect(flask.url_for('camera'))
-
-
-@app.route('/video_feed')
-def video_feed():  # 프레임을 실시간으로 전송해주는 페이지
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# # 프론트 스케쥴 페이지
-# @app.route('/schedule')
-# def schedule_page():
-#     return render_template('schedule.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST' :
@@ -359,13 +255,14 @@ def login():
         user_name = request.form['user_name']
         user_phoneNum = request.form['user_phoneNum']
         f_s = request.form = request.form['first_second']
+
         if len(user_company) == 0 or len(user_name) == 0 or len(user_phoneNum) == 0 or len(f_s) == 0 :
             return flask.redirect(flask.url_for('login_page'))
 
         else :
             # print("else")
             try :
-                table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+                table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
                 query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()), F_S=f_s)
                 result_proxy = connection.execute(query)
                 # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
@@ -387,7 +284,7 @@ def login():
 def logout() :
     ip = socket.gethostbyname(socket.gethostname())
 
-    login_table = sqlalchemy.Table('login', metadata, autoload=True, autoload_with=engine)
+    login_table = sqlalchemy.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
 
     db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).delete()
     db_session.commit()
@@ -398,7 +295,7 @@ def logout() :
 @app.route('/total')
 def total():
 
-    worker_table = sqlalchemy.Table('worker', metadata, autoload=True, autoload_with=engine)
+    worker_table = sqlalchemy.Table('WORKER', metadata, autoload=True, autoload_with=engine)
 
     try :
         checker = db_session.query(worker_table).filter(text("WORKER_TASK='checker'")).all()[0][-1]
@@ -410,7 +307,7 @@ def total():
         driver = 0
         lashing = 0
 
-    cargo_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    cargo_table = sqlalchemy.Table('CARGO', metadata, autoload=True, autoload_with=engine)
     data = db_session.query(cargo_table).all()[:6]
     # print(data)
 
@@ -424,7 +321,7 @@ def total():
     ip = socket.gethostbyname(socket.gethostname())
     total_num = len(db_session.query(cargo_table).filter(text("IP=:ip")).params(ip=ip).all())
 
-    schedule_table = sqlalchemy.Table('schedule', metadata, autoload=True, autoload_with=engine)
+    schedule_table = sqlalchemy.Table('SCHEDULE', metadata, autoload=True, autoload_with=engine)
     # print(deck)
     try :
         import_time = []
@@ -446,7 +343,7 @@ def total():
         return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num,date=datetime.date.today())
     
     except :
-        print("except")
+        # print("except")
         hour, minute, second = 0, 0, 0
         return render_template('total.html', checker=checker,driver=driver,lashing=lashing,data=data,hour=hour,minute=minute,second=second,vessel_name=vessel_name,deck=deck,total_num=total_num, date=datetime.date.today())
 
@@ -458,7 +355,7 @@ def hol_dec_send() :
         hold = request.form['hold']
         deck = request.form['deck']
 
-        login_table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+        login_table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
         ip = socket.gethostbyname(socket.gethostname())
         db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'DECK':deck, 'HOLD':hold}, synchronize_session=False)
         db_session.commit()
@@ -475,7 +372,7 @@ def vessel_send() :
 
         vessel_name = request.form['vessel']
 
-        login_table = db.Table('login', metadata, autoload=True, autoload_with=engine)
+        login_table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
         ip = socket.gethostbyname(socket.gethostname())
         db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'VESSEL_NAME':vessel_name}, synchronize_session=False)
         db_session.commit()
@@ -487,7 +384,7 @@ def vessel_send() :
 
 @app.route('/worker_send', methods=['GET', 'POST'])
 def worker_send() :
-    worker_table = db.Table('worker', metadata, autoload=True, autoload_with=engine)
+    worker_table = db.Table('WORKER', metadata, autoload=True, autoload_with=engine)
     db_session.query(worker_table).delete()
     db_session.commit()
 
@@ -507,7 +404,7 @@ def worker_send() :
 
         # print(checker, drive, lashing)
         try :
-            worker_table = db.Table('worker', metadata, autoload=True, autoload_with=engine)
+            worker_table = db.Table('WORKER', metadata, autoload=True, autoload_with=engine)
             query = db.insert(worker_table).values(WORKER_TASK=checker_task, WORKER_DATE=today, WORKER_PERSONNEL=checker)
             result_proxy = connection.execute(query)
             result_proxy.close()
@@ -543,26 +440,26 @@ def cal3():
 
 @app.route('/schedule', methods=['GET', 'POST'])
 def schedule() :
-    print("in")
+    # print("in")
     if request.method == 'POST':
         schedule_import = request.form['schedule_import']
         schedule_export = request.form['schedule_export']
         vessel_name = request.form['vessel_name']
         schedule_ton = request.form['schedule_ton']
 
-        print(type(schedule_ton), type(schedule_export), type(schedule_import), type(vessel_name))
+        # print(type(schedule_ton), type(schedule_export), type(schedule_import), type(vessel_name))
         if len(schedule_import) == 0 or len(schedule_export) == 0 or len(vessel_name) == 0 :
             return flask.redirect(flask.url_for('cal3'))
         else :
-            print("else")
+            # print("else")
             # try :
-            table = db.Table('schedule', metadata, autoload=True, autoload_with=engine)
+            table = db.Table('SCHEDULE', metadata, autoload=True, autoload_with=engine)
             query = db.insert(table).values(SCHEDULE_IMPORT=schedule_import, SCHEDULE_EXPORT=schedule_export, VESSEL_NAME=vessel_name, SCHEDULE_TON=schedule_ton)
             result_proxy = connection.execute(query)
             result_proxy.close()
             return flask.redirect(flask.url_for('cal3'))
     elif request.method == 'GET' :
-        print("get")
+        # print("get")
         return flask.redirect(flask.url_for('cal3'))
 
 @app.route('/worker')
@@ -571,12 +468,12 @@ def worker():
 
 @app.route('/deck')
 def deck() :
-    car_sql = 'select * from car'
+    car_sql = 'select * from CAR'
     car_df = pd.read_sql(car_sql, con=connection)
     car_name = list(car_df['CAR_NAME'])
     print(car_name)
     # car_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
-    cargo_table = sqlalchemy.Table('cargo', metadata, autoload=True, autoload_with=engine)
+    cargo_table = sqlalchemy.Table('CARGO', metadata, autoload=True, autoload_with=engine)
     # car_count_dic = {}
     car = [[0 for col in range(4)] for row in range(11)]
     for i in range(11) :
@@ -591,4 +488,4 @@ def deck() :
 
 
 if __name__ == '__main__':
-    app.run('localhost', 4997, debug=True)
+    app.run(host='0.0.0.0', port=4997, debug=True)
