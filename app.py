@@ -27,13 +27,15 @@ from PIL import Image
 import base64
 from io import BytesIO
 
+buffer = BytesIO()
+
 import socket
 
 import pandas as pd
 
 # db 연동
 # root:내비번
-engine = create_engine("mysql://new:new@3.17.70.200:3306/loading_DB")
+engine = create_engine("mysql://new:new@3.20.99.214:3306/loading_DB")
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
@@ -79,6 +81,9 @@ def vin_decoder(car_vin):
                 except:
                     num = random.randrange(len(car_num3[car_vin[3]]))
                     decode_list.append(car_num3[car_vin[3]][num])
+            else :
+                num = random.randrange(len(car_num3[car_vin[3]]))
+                decode_list.append(car_num3[car_vin[3]][num])
     if car_vin[5] in json_data['car_num5'].keys():
         decode_list.append(json_data['car_num5'][car_vin[5]])
         # print(json_data['car_num5'][car_vin[5]])
@@ -119,8 +124,9 @@ def camera_result():
 
 @app.route('/image_send')
 def image_send() :
-    image_df = pd.read_sql(sql='select * from IMAGE', con=engine)
+    image_df = pd.read_sql(sql='select * from TEMP', con=engine)
     img_str = image_df['IMAGE'].values[0]
+    car_vin = image_df['IMAGE_NAME'].values[0]
 
     img = base64.decodestring(img_str)
 
@@ -146,9 +152,10 @@ def image_send() :
     time.sleep(1)
 
     temp_table = sqlalchemy.Table('TEMP', metadata, autoload=True, autoload_with=engine)
-    db_session.query(temp_table).all().delete()
+    db_session.query(temp_table).delete()
+    db_session.commit()
 
-    return render_template('camera_result.html', image_file=file_path, text=text)
+    return render_template('camera_result.html', image_file=file_path, text=car_vin)
 
 @app.route('/del')
 def del_img():  # 이미지 삭제
@@ -267,7 +274,7 @@ def login():
             # print("else")
             try :
                 table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
-                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=socket.gethostbyname(socket.gethostname()), F_S=f_s)
+                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=request.remote_adddr, F_S=f_s)
                 result_proxy = connection.execute(query)
                 # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
                 result_proxy.close()
@@ -312,14 +319,14 @@ def total():
         lashing = 0
 
     cargo_table = sqlalchemy.Table('CARGO', metadata, autoload=True, autoload_with=engine)
-    data = db_session.query(cargo_table).all()[:6]
+    data = db_session.query(cargo_table).order_by(text("CARGO_INSPECT_TIME")).all()[:6]
     # print(data)
 
     date = datetime.datetime
 
     deck = []
     for i in range(1, 12) :
-        percent = (len(db_session.query(cargo_table).filter(text("DECK=:deck_num")).params(deck_num=i).all()) / 10) * 100
+        percent = (len(db_session.query(cargo_table).filter(text("DECK=:deck_num")).params(deck_num=i).all()) / 100) * 100
         deck.append(percent)
 
     ip = socket.gethostbyname(socket.gethostname())
