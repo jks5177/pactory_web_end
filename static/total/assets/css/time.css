@@ -44,7 +44,7 @@ h2 strong {
 }
 .countdown .bloc-time {
   float: left;
-  margin-right: 45px;
+  margin-right: 30px;
   text-align: center;
 }
 .countdown .bloc-time:last-child {
@@ -60,8 +60,8 @@ h2 strong {
 .countdown .figure {
   position: relative;
   float: left;
-  height: 110px;
-  width: 100px;
+  height: 100px;
+  width: 90px;
   margin-right: 10px;
   background-color: #fff;
   border-radius: 8px;

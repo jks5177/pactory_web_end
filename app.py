@@ -74,8 +74,11 @@ def vin_decoder(car_vin):
                     car = set([json_data['car_num4'][car_vin[4]]]).intersection(set(json_data['car_num3'][car_vin[3]]))
                 except:
                     car = set(json_data['car_num3'][car_vin[3]]).intersection(list(json_data['car_num4'][car_vin[4]]))
-                decode_list.append(list(car)[0])
-                # print('차량상세:', list(car)[0] )
+                try:
+                    decode_list.append(list(car)[0])
+                except:
+                    num = random.randrange(len(car_num3[car_vin[3]]))
+                    decode_list.append(car_num3[car_vin[3]][num])
     if car_vin[5] in json_data['car_num5'].keys():
         decode_list.append(json_data['car_num5'][car_vin[5]])
         # print(json_data['car_num5'][car_vin[5]])
@@ -123,6 +126,9 @@ def image_send() :
 
     im = Image.open(BytesIO(img))
 
+    numpy_image = np.array(im)
+    opencv_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
+
     now = time.localtime()
     s = '%04d-%02d-%02d-%02d-%02d-%02d' % (
         now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
@@ -134,8 +140,8 @@ def image_send() :
         os.makedirs(directory)
 
     # 파일 저장 시간.jpg는 매번 바뀌는 이미지, check.jpg는 저장할 수 있는 이미지
-    cv2.imwrite('static/' + file_path, frame)
-    cv2.imwrite('static/image/check.jpg', frame)
+    cv2.imwrite('static/' + file_path, opencv_image)
+    cv2.imwrite('static/image/check.jpg', opencv_image)
 
     time.sleep(1)
 
