@@ -181,7 +181,7 @@ def save_img():  # 이미지 저장
     # file_path = 'static/complete/' + str(cargo_vin) + '.jpg'
     # cv2.imwrite(file_path, img)
 
-    ip = request.remote_addr
+    ip = request.environ['REMOTE_ADDR']
     login_table = sqlalchemy.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
     f_s = db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).all()[0][-1]
 
@@ -274,7 +274,7 @@ def login():
             # print("else")
             try :
                 table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
-                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=request.remote_addr, F_S=f_s)
+                query = db.insert(table).values(LI_PHONENUM=user_phoneNum, LI_NAME=user_name, LI_UNLOADING=user_company, IP=request.environ['REMOTE_ADDR'], F_S=f_s)
                 result_proxy = connection.execute(query)
                 # print(user_phoneNum, user_name, user_company, socket.gethostbyname(socket.gethostname()))
                 result_proxy.close()
@@ -293,7 +293,7 @@ def login():
 
 @app.route('/logout')
 def logout() :
-    ip = request.remote_addr
+    ip = request.environ['REMOTE_ADDR']
 
     login_table = sqlalchemy.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
 
@@ -329,7 +329,7 @@ def total():
         percent = (len(db_session.query(cargo_table).filter(text("DECK=:deck_num")).params(deck_num=i).all()) / 100) * 100
         deck.append(percent)
 
-    ip = request.remote_addr
+    ip = request.environ['REMOTE_ADDR']
     total_num = len(db_session.query(cargo_table).filter(text("IP=:ip")).params(ip=ip).all())
 
     schedule_table = sqlalchemy.Table('SCHEDULE', metadata, autoload=True, autoload_with=engine)
@@ -367,7 +367,7 @@ def hol_dec_send() :
         deck = request.form['deck']
 
         login_table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
-        ip = request.remote_addr
+        ip = request.environ['REMOTE_ADDR']
         db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'DECK':deck, 'HOLD':hold}, synchronize_session=False)
         db_session.commit()
 
@@ -384,7 +384,7 @@ def vessel_send() :
         vessel_name = request.form['vessel']
 
         login_table = db.Table('LOGIN', metadata, autoload=True, autoload_with=engine)
-        ip = request.remote_addr
+        ip = request.environ['REMOTE_ADDR']
         db_session.query(login_table).filter(text("IP=:ip")).params(ip=ip).update({'VESSEL_NAME':vessel_name}, synchronize_session=False)
         db_session.commit()
 
