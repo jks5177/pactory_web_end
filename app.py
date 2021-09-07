@@ -20,6 +20,8 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+import random
+
 import pymysql
 pymysql.install_as_MySQLdb()
 
