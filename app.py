@@ -107,7 +107,7 @@ def vin_decoder(car_vin):
     return decode_list
 
 # 로그인 페이지
-@app.route('/_')
+@app.route('/')
 def login_page():
     return render_template('login.html')
 
