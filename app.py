@@ -37,7 +37,7 @@ import pandas as pd
 
 # db 연동
 # root:내비번
-engine = create_engine("mysql://new:new@3.20.99.214:3306/loading_DB")
+engine = create_engine("mysql://new:new@13.124.122.246:3306/loading_DB")
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
@@ -107,7 +107,7 @@ def vin_decoder(car_vin):
     return decode_list
 
 # 로그인 페이지
-@app.route('/')
+@app.route('/_')
 def login_page():
     return render_template('login.html')
 
@@ -449,7 +449,7 @@ def info():
     return render_template('info.html')
 
 @app.route('/cal')
-def cal3():
+def cal():
     return render_template('schedule.html')
 
 @app.route('/schedule', methods=['GET', 'POST'])
@@ -463,18 +463,20 @@ def schedule() :
 
         # print(type(schedule_ton), type(schedule_export), type(schedule_import), type(vessel_name))
         if len(schedule_import) == 0 or len(schedule_export) == 0 or len(vessel_name) == 0 :
-            return flask.redirect(flask.url_for('cal3'))
+            return flask.redirect(flask.url_for('cal'))
         else :
             # print("else")
-            # try :
-            table = db.Table('SCHEDULE', metadata, autoload=True, autoload_with=engine)
-            query = db.insert(table).values(SCHEDULE_IMPORT=schedule_import, SCHEDULE_EXPORT=schedule_export, VESSEL_NAME=vessel_name, SCHEDULE_TON=schedule_ton)
-            result_proxy = connection.execute(query)
-            result_proxy.close()
-            return flask.redirect(flask.url_for('cal3'))
+            try :
+                table = db.Table('SCHEDULE', metadata, autoload=True, autoload_with=engine)
+                query = db.insert(table).values(SCHEDULE_IMPORT=schedule_import, SCHEDULE_EXPORT=schedule_export, VESSEL_NAME=vessel_name, SCHEDULE_TON=schedule_ton)
+                result_proxy = connection.execute(query)
+                result_proxy.close()
+                return flask.redirect(flask.url_for('cal'))
+            except :
+                return flask.redirect(flask.url_for('cal'))
     elif request.method == 'GET' :
         # print("get")
-        return flask.redirect(flask.url_for('cal3'))
+        return flask.redirect(flask.url_for('cal'))
 
 @app.route('/worker')
 def worker():
